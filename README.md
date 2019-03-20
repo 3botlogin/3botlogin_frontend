@@ -1,2 +1,2 @@
-# 3Botlogin backend
-The (temporary) backend for 3Bot login
+# 3Botlogin frontend
+The frontend for 3Bot login
