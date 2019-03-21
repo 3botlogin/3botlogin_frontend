@@ -6,6 +6,16 @@ import './plugins'
 import './style.scss'
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Inital' && !store.state.doubleName) {
+    next({
+      name: 'Inital'
+    })
+  } else {
+    next()
+  }
+})
+
 export default new Vue({
   router,
   store,

@@ -1,7 +1,7 @@
 <section class="register">
-  <!-- <v-progress-linear style="position:fixed; top:0; left: 0;" class="ma-0" indeterminate> -->
-  </v-progress-linear>
-  <v-layout justify-center class="pt-4">
+  <!-- <v-progress-linear style="position:fixed; top:0; left: 0;" class="ma-0" indeterminate/> -->
+  
+  <v-layout justify-center>
     <v-flex md8>
       <v-card>
         <v-toolbar class="primary">
@@ -11,25 +11,26 @@
         </v-toolbar>
         <v-stepper v-model="step">
           <v-stepper-header class="elevation-0">
-            <v-stepper-step :complete="step > 1" step="1">Personal info</v-stepper-step>
+            <v-stepper-step color="accent" :complete="step > 1" step="1">Personal info</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="step > 2" step="2">Your key</v-stepper-step>
+            <v-stepper-step color="accent" :complete="step > 2" step="2">Your key</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="3">Finishing</v-stepper-step>
+            <v-stepper-step color="accent" step="3">Finishing</v-stepper-step>
           </v-stepper-header>
           <v-stepper-items>
             <v-stepper-content step="1">
-              <p class="title">Tell me more about yourself</p>
-              <p class="subheading">
-                Later i'll ask you for more info here.</br>
-                This time you get a free pass.
-              </p>
-              <v-layout>
-                <v-spacer />
-                <v-btn color="primary" @click="step++">
-                  Continue
-                </v-btn>
-              </v-layout>
+              <v-form @submit.prevent='step++'>
+                <p class="title">Tell me more about yourself</p>
+                <v-text-field box label="Double name" disabled v-model="doubleName"/>
+                <v-text-field autofocus box label="Email" type="email" v-model="email" required/>
+                <v-text-field placeholder="NOT IMPLEMENTED YET" disabled box label="Location"/>
+                <v-layout>
+                  <v-spacer />
+                  <v-btn color="primary" type="submit">
+                    Continue
+                  </v-btn>
+                </v-layout>
+              </v-form>
             </v-stepper-content>
             <v-stepper-content step="2">
               <p class="title">This will be your (little) secret</p>
@@ -37,10 +38,13 @@
                 Please write this on a piece of paper and keep it in a secure place. <br>
                 This is the only time you'll see this.
               </p>
-              <v-textarea readonly v-model="privateKey" box label="Key"></v-textarea>
+              <v-textarea :class="!alone ?  'notAlone' : ''" readonly v-model="keys.phrase" box label="Key">
+              </v-textarea>
+              <v-switch v-model="alone" label="I'm alone, show me my phrase." class="mt-0 ml-2"></v-switch>
+
               <v-layout>
                 <v-spacer />
-                <v-btn color="primary" @click="step++">
+                <v-btn color="primary" @click="areYouSureDialog = true">
                   Continue
                 </v-btn>
               </v-layout>
@@ -48,8 +52,8 @@
             <v-stepper-content step="3">
               <v-layout justify-center>
                 <div class="text-xs-center">
-                  <vue-qr text="Hello world!"></vue-qr>
-                  <p>Scan this QR with the 3Bot app to finish registration</p>
+                  <vue-qr :text="qrText"></vue-qr>
+                  <p>Scan this QR with the 3Bot app to finish registration.</p>
                 </div>
               </v-layout>
             </v-stepper-content>
@@ -58,4 +62,43 @@
       </v-card>
     </v-flex>
   </v-layout>
+
+  <v-dialog v-model="areYouSureDialog" width="700">
+    <v-card>
+      <v-toolbar class="primary">
+        <h1 class="headline white--text text-xs-center fw">
+          Are you sure
+        </h1>
+      </v-toolbar>
+      <v-card-text>
+        <p class="subheading">Are you sure you've written it down?</p>
+        <p class="subheading">This is the only time you'll get to see this.</p>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn flat @click="areYouSureDialog = false">Cancel</v-btn>
+        <v-btn flat @click="confirmDialog">Yup</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog v-model="youWereNeverAloneDialog" width="500">
+    <v-card>
+      <v-toolbar class="primary">
+        <h1 class="headline white--text text-xs-center fw">
+          No you didn't
+        </h1>
+      </v-toolbar>
+      <v-card-text>
+        <p>You were never alone, how did you do it?</p>
+        <v-switch v-model="proceedAnyway" label="I understand that I won't be able to recover my account without this, but I like living on the edge."></v-switch>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn flat @click="proceed" :disabled="!proceedAnyway">Proceed anyway</v-btn>
+        <v-btn flat @click="giveMeAnOtherChance">Give me an other chance</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
 </section>

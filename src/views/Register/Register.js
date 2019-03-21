@@ -1,4 +1,5 @@
 import VueQr from 'vue-qr'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'register',
@@ -8,22 +9,63 @@ export default {
   props: [],
   data () {
     return {
-      privateKey: '',
-      step: 1
+      step: 1,
+      email: 'null@fdsq.fd',
+      alone: false,
+      wasEverAlone: false,
+      areYouSureDialog: false,
+      youWereNeverAloneDialog: false,
+      proceedAnyway: false
     }
   },
   computed: {
-
+    ...mapGetters([
+      'keys',
+      'doubleName'
+    ]),
+    qrText () {
+      return `Hello:${this.keys.privateKey}`
+    }
   },
   mounted () {
-    // TODO: Generate keys
-    // TODO: Show seed phrase
-    // TODO: Show dialogbox to confirm user has written down the seed phrase
-    // TODO: Show private key in QR
+    this.generateKeys()
   },
   methods: {
-    showQR () {
-      console.log(`Go On`)
+    ...mapActions([
+      'generateKeys',
+      'registerUser'
+    ]),
+    confirmDialog () {
+      if (this.wasEverAlone) {
+        this.step++
+        this.areYouSureDialog = false
+      } else {
+        this.youWereNeverAloneDialog = true
+      }
+    },
+    giveMeAnOtherChance () {
+      this.areYouSureDialog = false
+      this.youWereNeverAloneDialog = false
+      this.proceedAnyway = false
+    },
+    proceed () {
+      this.areYouSureDialog = false
+      this.youWereNeverAloneDialog = false
+      this.step++
+    }
+  },
+  watch: {
+    alone (val) {
+      if (val) {
+        this.wasEverAlone = true
+      }
+    },
+    step (val) {
+      if (val === 3) {
+        this.registerUser({
+          email: this.email
+        })
+      }
     }
   }
 }

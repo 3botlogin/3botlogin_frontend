@@ -12,9 +12,16 @@
     position: fixed;
     opacity: 0.75;
 }
-.v-card {
-    border-radius: 10px;
-}
 .fw {
     width: 100%;
+}
+.notAlone {
+    textarea {
+        filter: blur(5px);
+    }
+}
+
+// Vuetify extention
+.v-card {
+    border-radius: 10px;
 }
