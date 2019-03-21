@@ -1,13 +1,16 @@
 <section class="inital">
-  <v-progress-linear style="position:fixed; top:0; left: 0;" class="ma-0" indeterminate v-if="nameCheckStatus.checking"></v-progress-linear>
+  <v-progress-linear style="position:fixed; top:0; left: 0;" class="ma-0" indeterminate v-if="nameCheckStatus.checking">
+  </v-progress-linear>
   <v-layout justify-center class="pt-4">
     <v-flex md8>
       <v-card>
+        <v-toolbar class="primary">
+          <h1 class="headline white--text text-xs-center fw">
+            Identify yourself
+          </h1>
+        </v-toolbar>
         <v-form v-model="valid" @submit.prevent="identify({doubleName})">
           <v-card-text>
-            <v-card-title class="headline pt-0 pl-0" primary-title>
-              Identify yourself
-            </v-card-title>
             <v-text-field :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
               label="Double name" hint="Give in your double name separated by a dot" required></v-text-field>
           </v-card-text>

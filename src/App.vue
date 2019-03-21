@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <div class="overlay primary darken-2"></div>
     <v-content>
       <v-container class="mt-4">
         <router-view/>
