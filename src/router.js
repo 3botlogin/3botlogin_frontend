@@ -12,6 +12,14 @@ export default new Router({
       path: '/',
       name: 'Inital',
       component: Inital
+    },{
+      path: '/register',
+      name: 'register',
+      component: () => import(/* webpackChunkName: "teams" */ './views/Register')
+    },{
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "teams" */ './views/Login')
     }
   ]
 })
