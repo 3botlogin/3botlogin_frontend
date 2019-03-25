@@ -11,6 +11,16 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  mounted () { 
+   if (this.$route.query && this.$route.query.state && this.$route.query.redirecturl) {
+     this.$store.dispatch('saveState', {
+       hash: this.$route.query.state,
+       redirectUrl: this.$route.query.redirecturl
+     })
+   } else {
+     this.$router.push('error')
+   }
+  },
 };
 </script>

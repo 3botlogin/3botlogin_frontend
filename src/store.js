@@ -7,6 +7,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    hash: null,
+    redirectUrl: null,
     keys: {},
     doubleName: null,
     nameCheckStatus: {
@@ -24,9 +26,19 @@ export default new Vuex.Store({
     },
     setDoubleName (state, name) {
       state.doubleName = name
+    },
+    setHash (state, hash) {
+      state.hash = hash
+    },
+    setRedirectUrl (state, redirectUrl) {
+      state.redirectUrl = redirectUrl
     }
   },
   actions: {
+    saveState (context, payload) {
+      context.commit('setHash', payload.hash)
+      context.commit('setRedirectUrl', payload.redirectUrl)
+    },
     identify (context, doubleName) {
       context.commit('setNameCheckStatus', {
         checked: false,
@@ -52,7 +64,6 @@ export default new Vuex.Store({
     },
     async generateKeys (context) {
       context.commit('setKeys', await cryptoService.generateAsymmetricKeypair())
-      // TODO: send to backend
     },
     registerUser (context, data) {
       console.log(`Register user`)
@@ -61,11 +72,20 @@ export default new Vuex.Store({
         email: data.email,
         publicKey: context.getters.keys.privateKey
       })
+      context.dispatch('loginUser', true)
+    },
+    loginUser (context, firstTime = false) {
+      socketService.emit('login', {
+        doubleName: context.getters.doubleName,
+        state: context.getters.hash,
+        firstTime
+      })
     }
   },
   getters: {
     doubleName: state => state.doubleName,
     nameCheckStatus: state => state.nameCheckStatus,
-    keys: state => state.keys
+    keys: state => state.keys,
+    hash: state => state.hash
   }
 })

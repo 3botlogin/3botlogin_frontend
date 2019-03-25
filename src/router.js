@@ -10,7 +10,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Inital',
+      name: 'inital',
       component: Inital
     },{
       path: '/register',
@@ -20,6 +20,10 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "teams" */ './views/Login')
+    },{
+      path: '/error',
+      name: 'error',
+      component: () => import(/* webpackChunkName: "teams" */ './views/Errorpage')
     }
   ]
 })

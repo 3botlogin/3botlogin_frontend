@@ -21,7 +21,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'identify'
+      'identify',
+      'loginUser'
     ])
   },
   watch: {
@@ -30,6 +31,7 @@ export default {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
         this.$router.push({ name: 'login' })
+        this.loginUser()
       }
     }
   }

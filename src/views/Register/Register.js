@@ -21,10 +21,14 @@ export default {
   computed: {
     ...mapGetters([
       'keys',
-      'doubleName'
+      'doubleName',
+      'hash'
     ]),
     qrText () {
-      return `Hello:${this.keys.privateKey}`
+      return JSON.stringify({
+        hash: this.hash,
+        privateKey: this.keys.privateKey
+      })
     }
   },
   mounted () {
