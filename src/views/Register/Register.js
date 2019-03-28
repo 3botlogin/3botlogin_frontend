@@ -22,7 +22,8 @@ export default {
     ...mapGetters([
       'keys',
       'doubleName',
-      'hash'
+      'hash',
+      'scannedFlagUp'
     ]),
     qrText () {
       return JSON.stringify({
@@ -69,6 +70,12 @@ export default {
         this.registerUser({
           email: this.email
         })
+      }
+    },
+    scannedFlagUp (val) {
+      console.log(`SCANNEDFLAG CHANGED`)
+      if (val && this.step === 3) {
+        this.$router.push({ name: 'login' })
       }
     }
   }

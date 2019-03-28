@@ -15,7 +15,9 @@ export default new Vuex.Store({
       checked: false,
       checking: false,
       available: false
-    }
+    },
+    scannedFlagUp: false,
+    signed: null
   },
   mutations: {
     setNameCheckStatus (state, status) {
@@ -32,6 +34,12 @@ export default new Vuex.Store({
     },
     setRedirectUrl (state, redirectUrl) {
       state.redirectUrl = redirectUrl
+    },
+    setScannedFlagUp (state, scannedFlagUp) {
+      state.scannedFlagUp = scannedFlagUp
+    },
+    setSigned (state, signed) {
+      state.signed = signed
     }
   },
   actions: {
@@ -74,6 +82,12 @@ export default new Vuex.Store({
       })
       context.dispatch('loginUser', true)
     },
+    SOCKET_scannedFlag (context) {
+      context.commit('setScannedFlagUp', true)
+    },
+    SOCKET_signed (context, data) {
+      context.commit('setSigned', data)
+    },
     loginUser (context, firstTime = false) {
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
@@ -86,6 +100,9 @@ export default new Vuex.Store({
     doubleName: state => state.doubleName,
     nameCheckStatus: state => state.nameCheckStatus,
     keys: state => state.keys,
-    hash: state => state.hash
+    hash: state => state.hash,
+    redirectUrl: state => state.redirectUrl,
+    scannedFlagUp: state => state.scannedFlagUp,
+    signed: state => state.signed
   }
 })

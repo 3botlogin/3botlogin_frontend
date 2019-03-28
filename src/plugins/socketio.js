@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import store from '../store'
 import VueSocketIO from 'vue-socket.io/dist/vue-socketio'
+import config from '../../public/config'
 
 Vue.use(new VueSocketIO({
   debug: true,
   secure: false,
-  connection: 'http://localhost:8080',
+  connection: config.apiurl,
   vuex: {
     store,
     actionPrefix: 'SOCKET_'
