@@ -10,7 +10,7 @@ export default {
   data () {
     return {
       step: 1,
-      email: 'null@fdsq.fd',
+      email: '',
       alone: false,
       wasEverAlone: false,
       areYouSureDialog: false,
