@@ -78,7 +78,7 @@ export default new Vuex.Store({
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
         email: data.email,
-        publicKey: context.getters.keys.privateKey
+        publicKey: context.getters.keys.publicKey
       })
       context.dispatch('loginUser', true)
     },
