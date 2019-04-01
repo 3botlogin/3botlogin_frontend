@@ -43,6 +43,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    SOCKET_connection (context, payload) {
+      console.log(`hi`)
+    },
     saveState (context, payload) {
       context.commit('setHash', payload.hash)
       context.commit('setRedirectUrl', payload.redirectUrl)
