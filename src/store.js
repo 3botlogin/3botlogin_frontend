@@ -43,7 +43,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    SOCKET_connection (context, payload) {
+    SOCKET_connect (context, payload) {
       console.log(`hi`)
     },
     saveState (context, payload) {
