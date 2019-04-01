@@ -1,3 +1,3 @@
 export default ({
-  apiurl: 'http://localhost:5000'
+  apiurl: 'https://login.threefold.me:5000'
 })
