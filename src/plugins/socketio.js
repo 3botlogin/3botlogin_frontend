@@ -5,10 +5,11 @@ import config from '../../public/config'
 
 Vue.use(new VueSocketIO({
   debug: true,
-  secure: false,
+  secure: true,
   connection: config.apiurl,
   vuex: {
     store,
     actionPrefix: 'SOCKET_'
-  }
+  },
+  options: { path: "/api" }
 }))
