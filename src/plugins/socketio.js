@@ -10,6 +10,5 @@ Vue.use(new VueSocketIO({
   vuex: {
     store,
     actionPrefix: 'SOCKET_'
-  },
-  options: { path: "/api/socket.io/" }
+  }
 }))
