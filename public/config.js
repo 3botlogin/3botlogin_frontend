@@ -1,3 +1,3 @@
 export default ({
-  apiurl: 'https://login.threefold.me/api'
+  apiurl: 'https://login.threefold.me/'
 })
