@@ -11,11 +11,17 @@ export default {
     return {
       step: 1,
       email: '',
+      valid: false,
       alone: false,
       wasEverAlone: false,
       areYouSureDialog: false,
       youWereNeverAloneDialog: false,
-      proceedAnyway: false
+      proceedAnyway: false,
+      emailRegex: new RegExp(/.+@.+\..+/),
+      emailRules: [
+        v => !!v || 'Email is required',
+        v => this.emailRegex.test(v) || 'Email doesn\'t seems valid'
+      ]
     }
   },
   computed: {

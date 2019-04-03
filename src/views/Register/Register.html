@@ -19,14 +19,14 @@
           </v-stepper-header>
           <v-stepper-items>
             <v-stepper-content step="1">
-              <v-form @submit.prevent='step++'>
+              <v-form v-model="valid" @submit.prevent='valid ? step++ : null'>
                 <p class="title">Tell me more about yourself</p>
                 <v-text-field box label="Double name" disabled v-model="doubleName"/>
-                <v-text-field autofocus box label="Email" type="email" v-model="email" required/>
+                <v-text-field autofocus box label="Email" type="email" v-model="email" required :rules="emailRules"/>
                 <v-text-field placeholder="NOT IMPLEMENTED YET" disabled box label="Location"/>
                 <v-layout>
                   <v-spacer />
-                  <v-btn color="primary" type="submit">
+                  <v-btn :disabled="!valid" color="primary" type="submit">
                     Continue
                   </v-btn>
                 </v-layout>
