@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import socketService from './services/socketService'
 import cryptoService from './services/cryptoService'
+import { CLIENT_RENEG_WINDOW } from 'tls';
 
 Vue.use(Vuex)
 
@@ -96,6 +97,12 @@ export default new Vuex.Store({
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
         firstTime
+      })
+    },
+    resendNotification (context) {
+      socketService.emit('resend', {
+        doubleName: context.getters.doubleName,
+        state: context.getters.hash
       })
     }
   },

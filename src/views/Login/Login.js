@@ -1,4 +1,4 @@
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'login',
@@ -20,7 +20,9 @@ export default {
 
   },
   methods: {
-
+    ...mapActions([
+      'resendNotification'
+    ])
   },
   watch: {
     signed (val) {
