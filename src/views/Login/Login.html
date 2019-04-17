@@ -12,7 +12,7 @@
             <v-layout column align-center>
               <v-progress-circular :size="100" :width="15" color="accent" indeterminate></v-progress-circular>
               <p class="subheading pt-3">Please check your phone.</p>
-              <v-btn class="accent" @click="resendNotification">
+              <v-btn class="accent" @click="resendNotification" v-if="!firstTime">
                 <v-icon left>
                   refresh
                 </v-icon>

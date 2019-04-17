@@ -16,7 +16,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'nameCheckStatus'
+      'nameCheckStatus',
+      'hash'
     ])
   },
   methods: {
@@ -30,8 +31,8 @@ export default {
       if (val.checked && val.available) {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
+        this.loginUser()``
         this.$router.push({ name: 'login' })
-        this.loginUser()
       }
     }
   }

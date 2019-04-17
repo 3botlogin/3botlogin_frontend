@@ -40,6 +40,7 @@ export default {
   },
   mounted () {
     this.generateKeys()
+    console.log(`ddddddddd`)
   },
   methods: {
     ...mapActions([
@@ -76,6 +77,7 @@ export default {
         this.registerUser({
           email: this.email
         })
+        window.location.href = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${this.hash}`
       }
     },
     scannedFlagUp (val) {

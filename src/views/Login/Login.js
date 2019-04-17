@@ -13,7 +13,8 @@ export default {
     ...mapGetters([
       'signed',
       'redirectUrl',
-      'doubleName'
+      'doubleName',
+      'firstTime'
     ])
   },
   mounted () {

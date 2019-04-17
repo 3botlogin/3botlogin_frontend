@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import socketService from './services/socketService'
 import cryptoService from './services/cryptoService'
-import { CLIENT_RENEG_WINDOW } from 'tls';
 
 Vue.use(Vuex)
 
@@ -18,7 +17,8 @@ export default new Vuex.Store({
       available: false
     },
     scannedFlagUp: false,
-    signed: null
+    signed: null,
+    firstTime: null
   },
   mutations: {
     setNameCheckStatus (state, status) {
@@ -41,6 +41,9 @@ export default new Vuex.Store({
     },
     setSigned (state, signed) {
       state.signed = signed
+    },
+    setFirstTime (state, firstTime) {
+      state.firstTime = firstTime
     }
   },
   actions: {
@@ -93,6 +96,7 @@ export default new Vuex.Store({
       context.commit('setSigned', data)
     },
     loginUser (context, firstTime = false) {
+      context.commit('setFirstTime', firstTime)
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
@@ -113,6 +117,7 @@ export default new Vuex.Store({
     hash: state => state.hash,
     redirectUrl: state => state.redirectUrl,
     scannedFlagUp: state => state.scannedFlagUp,
-    signed: state => state.signed
+    signed: state => state.signed,
+    firstTime: state => state.firstTime
   }
 })
