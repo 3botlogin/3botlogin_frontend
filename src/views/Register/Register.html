@@ -53,7 +53,7 @@
             <v-stepper-content step="3">
               <v-layout justify-center>
                 <div class="text-xs-center">
-                  <vue-qr :text="qrText"></vue-qr>
+                  <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   <p>Scan this QR with the 3Bot app to finish registration.</p>
                 </div>
               </v-layout>

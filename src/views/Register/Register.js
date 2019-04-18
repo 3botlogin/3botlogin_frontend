@@ -29,6 +29,8 @@ export default {
       'keys',
       'doubleName',
       'hash',
+      'signed',
+      'redirectUrl',
       'scannedFlagUp'
     ]),
     qrText () {
@@ -40,7 +42,6 @@ export default {
   },
   mounted () {
     this.generateKeys()
-    console.log(`ddddddddd`)
   },
   methods: {
     ...mapActions([
@@ -64,6 +65,10 @@ export default {
       this.areYouSureDialog = false
       this.youWereNeverAloneDialog = false
       this.step++
+    },
+    openApp () {
+      var link = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${this.hash}`
+      window.location.href = link
     }
   },
   watch: {
@@ -77,13 +82,19 @@ export default {
         this.registerUser({
           email: this.email
         })
-        window.location.href = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${this.hash}`
+        this.openApp()
       }
     },
     scannedFlagUp (val) {
       console.log(`SCANNEDFLAG CHANGED`)
       if (val && this.step === 3) {
         this.$router.push({ name: 'login' })
+      }
+    },
+    signed (val) {
+      console.log(`SIGNED`)
+      if (val && this.step === 3) {
+        window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${val}`
       }
     }
   }

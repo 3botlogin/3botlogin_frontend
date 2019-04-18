@@ -31,7 +31,8 @@ export default {
       if (val.checked && val.available) {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
-        this.loginUser()``
+        this.loginUser()
+        window.location.href = `threebot://login/?hash=${encodeURIComponent(this.hash)}`
         this.$router.push({ name: 'login' })
       }
     }
