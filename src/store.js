@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import socketService from './services/socketService'
 import cryptoService from './services/cryptoService'
+import axios from 'axios'
+import config from '../public/config'
 
 Vue.use(Vuex)
 
@@ -82,12 +84,12 @@ export default new Vuex.Store({
     },
     registerUser (context, data) {
       console.log(`Register user`)
+      context.dispatch('loginUser', true)
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
         email: data.email,
         publicKey: context.getters.keys.publicKey
       })
-      context.dispatch('loginUser', true)
     },
     SOCKET_scannedFlag (context) {
       context.commit('setScannedFlagUp', true)
@@ -108,6 +110,18 @@ export default new Vuex.Store({
         doubleName: context.getters.doubleName,
         state: context.getters.hash
       })
+    },
+    forceRefetchStatus (context) {
+      axios.get(`${config.apiurl}api/forcerefetch?hash=${context.getters.hash}&doublename=${context.getters.doubleName}`).then(response => {
+        if (response.data.scanned) context.commit('setScannedFlagUp', response.data.scanned)
+        if (response.data.signed) context.commit('setSigned', response.data.signed)
+      }).catch(e => {
+        alert(e)
+      })
+      // socketService.emit('forceRefetch', {
+      //   doubleName: context.getters.doubleName,
+      //   state: context.getters.hash
+      // })
     }
   },
   getters: {

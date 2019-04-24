@@ -17,7 +17,8 @@ export default {
   computed: {
     ...mapGetters([
       'nameCheckStatus',
-      'hash'
+      'hash',
+      'redirectUrl'
     ])
   },
   methods: {
@@ -32,7 +33,8 @@ export default {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
         this.loginUser()
-        window.location.href = `threebot://login/?hash=${encodeURIComponent(this.hash)}`
+        var redirectUrl = `${this.redirectUrl}?username=${this.doubleName}&signedhash=`
+        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&redirectUrl=${encodeURIComponent(redirectUrl)}`, '_self').close()
         this.$router.push({ name: 'login' })
       }
     }

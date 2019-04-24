@@ -21,7 +21,9 @@ export default {
       emailRules: [
         v => !!v || 'Email is required',
         v => this.emailRegex.test(v) || 'Email doesn\'t seems valid'
-      ]
+      ],
+      didLeavePage: false,
+      rechecked: false
     }
   },
   computed: {
@@ -42,12 +44,28 @@ export default {
   },
   mounted () {
     this.generateKeys()
+    window.onblur = this.lostFocus
+    window.onfocus = this.gotFocus
   },
   methods: {
     ...mapActions([
       'generateKeys',
-      'registerUser'
+      'registerUser',
+      'forceRefetchStatus'
     ]),
+    lostFocus () {
+      console.log(`Lost focus, set flag`)
+      this.didLeavePage = true
+    },
+    gotFocus () {
+      console.log(`--- Got focus again, flag is ${this.didLeavePage}`)
+      if (this.didLeavePage) {
+        if (!this.rechecked) {
+          this.forceRefetchStatus()
+        }
+        this.rechecked = true
+      }
+    },
     confirmDialog () {
       if (this.wasEverAlone) {
         this.step++
@@ -67,8 +85,8 @@ export default {
       this.step++
     },
     openApp () {
-      var link = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${this.hash}`
-      window.location.href = link
+      var redirectUrl = `${this.redirectUrl}?username=${this.doubleName}&signedhash=`
+      window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&redirectUrl=${encodeURIComponent(redirectUrl)}`, '_self')
     }
   },
   watch: {
@@ -78,23 +96,22 @@ export default {
       }
     },
     step (val) {
-      if (val === 3) {
+      if (val === 2) {
         this.registerUser({
           email: this.email
         })
+      } else if (val === 3) {
         this.openApp()
       }
     },
     scannedFlagUp (val) {
-      console.log(`SCANNEDFLAG CHANGED`)
       if (val && this.step === 3) {
         this.$router.push({ name: 'login' })
       }
     },
     signed (val) {
-      console.log(`SIGNED`)
       if (val && this.step === 3) {
-        window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${val}`
+        window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${this.signed}`
       }
     }
   }

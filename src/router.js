@@ -15,15 +15,15 @@ export default new Router({
     },{
       path: '/register',
       name: 'register',
-      component: () => import(/* webpackChunkName: "teams" */ './views/Register')
+      component: () => import(/* webpackChunkName: "register-page" */ './views/Register')
     },{
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "teams" */ './views/Login')
+      component: () => import(/* webpackChunkName: "login-page" */ './views/Login')
     },{
       path: '/error',
       name: 'error',
-      component: () => import(/* webpackChunkName: "teams" */ './views/Errorpage')
+      component: () => import(/* webpackChunkName: "error-page" */ './views/Errorpage')
     }
   ]
 })

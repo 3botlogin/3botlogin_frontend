@@ -1,6 +1,4 @@
 <section class="register">
-  <!-- <v-progress-linear style="position:fixed; top:0; left: 0;" class="ma-0" indeterminate/> -->
-  
   <v-layout justify-center>
     <v-flex md8>
       <v-card>
@@ -55,6 +53,8 @@
                 <div class="text-xs-center">
                   <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   <p>Scan this QR with the 3Bot app to finish registration.</p>
+                  <div :class="didLeavePage ? 'accent' : 'error'">Did leave page</div>
+                  <div :class="rechecked ? 'accent' : 'error'">Rechecked</div>
                 </div>
               </v-layout>
             </v-stepper-content>
@@ -101,5 +101,4 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
 </section>
