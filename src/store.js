@@ -18,6 +18,11 @@ export default new Vuex.Store({
       checking: false,
       available: false
     },
+    emailVerificationStatus: {
+      checked: false,
+      checking: false,
+      valid: false
+    },
     scannedFlagUp: false,
     signed: null,
     firstTime: null
@@ -46,6 +51,9 @@ export default new Vuex.Store({
     },
     setFirstTime (state, firstTime) {
       state.firstTime = firstTime
+    },
+    setEmailVerificationStatus (state, status) {
+      state.emailVerificationStatus = status
     }
   },
   actions: {
@@ -90,6 +98,15 @@ export default new Vuex.Store({
         email: data.email,
         publicKey: context.getters.keys.publicKey
       })
+      axios.post(`${config.openkycurl}users`, {
+        'user_id': context.getters.doubleName,
+        'email': data.email,
+        'callback_url': `${window.location.protocol}//${window.location.host}/verifyemail`
+      }).then(x => {
+        console.log(`Mail has been sent`)
+      }).catch(e => {
+        alert(e)
+      })
     },
     SOCKET_scannedFlag (context) {
       context.commit('setScannedFlagUp', true)
@@ -118,10 +135,30 @@ export default new Vuex.Store({
       }).catch(e => {
         alert(e)
       })
-      // socketService.emit('forceRefetch', {
-      //   doubleName: context.getters.doubleName,
-      //   state: context.getters.hash
-      // })
+    },
+    validateEmail (context, data) {
+      if (data && data.userId && data.verificationCode) {
+        context.commit('setEmailVerificationStatus', {
+          checked: false,
+          checking: true,
+          valid: false
+        })
+        axios.post(`${config.openkycurl}users/${data.userId}/verify`, {
+          verification_code: data.verificationCode
+        }).then(x => {
+          context.commit('setEmailVerificationStatus', {
+            checked: true,
+            checking: false,
+            valid: true
+          })
+        }).catch(e => {
+          context.commit('setEmailVerificationStatus', {
+            checked: true,
+            checking: false,
+            valid: false
+          })
+        })
+      }
     }
   },
   getters: {
@@ -132,6 +169,7 @@ export default new Vuex.Store({
     redirectUrl: state => state.redirectUrl,
     scannedFlagUp: state => state.scannedFlagUp,
     signed: state => state.signed,
-    firstTime: state => state.firstTime
+    firstTime: state => state.firstTime,
+    emailVerificationStatus: state => state.emailVerificationStatus
   }
 })

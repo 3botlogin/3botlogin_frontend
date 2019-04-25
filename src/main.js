@@ -7,7 +7,8 @@ import './style.scss'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if ((to.name !== 'inital' && to.name !== 'error') && !store.state.doubleName) {
+  console.log(`to.name == ${to.name}`)
+  if ((to.name !== 'inital' && to.name !== 'error' && to.name !== 'verifyemail') && !store.state.doubleName) {
     next({
       name: 'inital'
     })

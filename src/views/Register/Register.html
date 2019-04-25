@@ -53,8 +53,6 @@
                 <div class="text-xs-center">
                   <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   <p>Scan this QR with the 3Bot app to finish registration.</p>
-                  <div :class="didLeavePage ? 'accent' : 'error'">Did leave page</div>
-                  <div :class="rechecked ? 'accent' : 'error'">Rechecked</div>
                 </div>
               </v-layout>
             </v-stepper-content>
