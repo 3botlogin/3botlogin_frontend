@@ -1,6 +1,6 @@
 import nacl from 'tweetnacl'
 import bip39 from 'bip39'
-import { encodeBase64 } from 'tweetnacl-util'
+import { encodeBase64, decodeUTF8, decodeBase64 } from 'tweetnacl-util'
 
 export default ({
   generateAsymmetricKeypair () {
@@ -13,6 +13,15 @@ export default ({
         privateKey: encodeBase64(keys.secretKey),
         publicKey: encodeBase64(keys.publicKey)
       })
+    })
+  },
+  validateSignature (message, signature, publicKey) {
+    console.log(`Validating ${message}, ${signature}, ${publicKey}`)
+    return new Promise(async (resolve, reject) => {
+      publicKey = decodeBase64(publicKey)
+      message = decodeUTF8(message)
+      signature = decodeBase64(signature)
+      resolve(nacl.sign.detached.verify(message, signature, publicKey))
     })
   }
 //   ,

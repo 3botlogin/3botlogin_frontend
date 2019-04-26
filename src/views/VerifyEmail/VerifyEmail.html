@@ -18,7 +18,7 @@
               <p class="subheading pt-3">Email validated</p>
             </v-layout>
             <v-layout column align-center v-if="emailVerificationStatus.checked && !emailVerificationStatus.valid">
-              <v-icon :size="100" color="accent">close</v-icon>
+              <v-icon :size="100" color="error">close</v-icon>
               <p class="subheading pt-3">There was a problem validating your email.</p>
             </v-layout>
           </v-card-text>
