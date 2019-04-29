@@ -38,7 +38,9 @@ export default {
     qrText () {
       return JSON.stringify({
         hash: this.hash,
-        privateKey: this.keys.privateKey
+        privateKey: this.keys.privateKey,
+        doubleName: this.doubleName,
+        email: this.email
       })
     }
   },
@@ -85,8 +87,8 @@ export default {
       this.step++
     },
     openApp () {
-      var redirectUrl = `${this.redirectUrl}?username=${this.doubleName}&signedhash=`
-      window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&redirectUrl=${encodeURIComponent(redirectUrl)}`, '_self')
+      // TODO add doublename and email to the mix
+      window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}`, '_self')
     }
   },
   watch: {

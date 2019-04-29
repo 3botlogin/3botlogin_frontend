@@ -101,7 +101,8 @@ export default new Vuex.Store({
       axios.post(`${config.openkycurl}users`, {
         'user_id': context.getters.doubleName,
         'email': data.email,
-        'callback_url': `${window.location.protocol}//${window.location.host}/verifyemail`
+        'callback_url': `${window.location.protocol}//${window.location.host}/verifyemail`,
+        'public_key': context.getters.keys.publicKey
       }).then(x => {
         console.log(`Mail has been sent`)
       }).catch(e => {
