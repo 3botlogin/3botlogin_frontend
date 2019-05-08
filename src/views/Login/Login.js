@@ -27,12 +27,15 @@ export default {
   watch: {
     signed (val) {
       if (val) {
-        console.log(val)
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
-        var url = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        
-        console.log(url)
+        var union = ''
+        if (this.redirectUrl.indexOf('?' >= 0)) {
+          union = '?'
+        } else {
+          union = '&'
+        }
+        var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         window.location.href = url
       }
     }
