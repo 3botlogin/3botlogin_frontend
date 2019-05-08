@@ -25,7 +25,10 @@ export default new Vuex.Store({
     },
     scannedFlagUp: false,
     signed: null,
-    firstTime: null
+    firstTime: null,
+    scope: null,
+    appId: null,
+    appPublicKey: null
   },
   mutations: {
     setNameCheckStatus (state, status) {
@@ -54,6 +57,15 @@ export default new Vuex.Store({
     },
     setEmailVerificationStatus (state, status) {
       state.emailVerificationStatus = status
+    },
+    setScope (state, scope) {
+      state.scope = scope
+    },
+    setAppId (state, appId) {
+      state.appId = appId
+    },
+    setAppPublicKey (state, appPublicKey) {
+      state.appPublicKey = appPublicKey
     }
   },
   actions: {
@@ -88,7 +100,7 @@ export default new Vuex.Store({
       })
     },
     async generateKeys (context) {
-      context.commit('setKeys', await cryptoService.generateAsymmetricKeypair())
+      context.commit('setKeys', await cryptoService.generateKeys())
     },
     registerUser (context, data) {
       console.log(`Register user`)
@@ -178,6 +190,15 @@ export default new Vuex.Store({
           })
         })
       }
+    },
+    setScope (context, scope) {
+      context.commit('setScope', scope)
+    },
+    setAppId (context, appId) {
+      context.commit('setAppId', appId)
+    },
+    setAppPublicKey (context, appPublicKey) {
+      context.commit('setAppPublicKey', appPublicKey)
     }
   },
   getters: {
@@ -189,6 +210,9 @@ export default new Vuex.Store({
     scannedFlagUp: state => state.scannedFlagUp,
     signed: state => state.signed,
     firstTime: state => state.firstTime,
-    emailVerificationStatus: state => state.emailVerificationStatus
+    emailVerificationStatus: state => state.emailVerificationStatus,
+    scope: state => state.scope,
+    appId: state => state.appId,
+    appPublicKey: state => state.appPublicKey
   }
 })

@@ -20,6 +20,11 @@ export default {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
       })
+      if (this.$route.query.scope && this.$route.query.appid && this.$route.query.publickey) {
+        this.setScope(this.$route.query.scope.split(','))
+        this.setAppId(this.$route.query.appid)
+        this.setAppPublicKey(this.$route.query.publickey)
+      }
     } else {
       this.$router.push('error')
     }
@@ -27,14 +32,16 @@ export default {
   computed: {
     ...mapGetters([
       'nameCheckStatus',
-      'hash',
-      'redirectUrl'
+      'hash'
     ])
   },
   methods: {
     ...mapActions([
       'identify',
-      'loginUser'
+      'loginUser',
+      'setScope',
+      'setAppId',
+      'setAppPublicKey'
     ])
   },
   watch: {
@@ -43,8 +50,7 @@ export default {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
         this.loginUser()
-        var redirectUrl = `${this.redirectUrl}?username=${this.doubleName}&signedhash=`
-        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&redirectUrl=${encodeURIComponent(redirectUrl)}`, '_self').close()
+        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}`, '_self')
         this.$router.push({ name: 'login' })
       }
     }

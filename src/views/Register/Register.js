@@ -33,14 +33,20 @@ export default {
       'hash',
       'signed',
       'redirectUrl',
-      'scannedFlagUp'
+      'scannedFlagUp',
+      'scope',
+      'appId',
+      'appPublicKey'
     ]),
     qrText () {
       return JSON.stringify({
         hash: this.hash,
         privateKey: this.keys.privateKey,
         doubleName: this.doubleName,
-        email: this.email
+        email: this.email,
+        scope: this.scope,
+        appId: this.appId,
+        appPublicKey: this.appPublicKey
       })
     }
   },

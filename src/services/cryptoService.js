@@ -1,16 +1,18 @@
-import nacl from 'tweetnacl'
 import bip39 from 'bip39'
 import { encodeBase64, decodeUTF8, decodeBase64 } from 'tweetnacl-util'
+const sodium = require('libsodium-wrappers')
 
 export default ({
-  generateAsymmetricKeypair () {
+  generateKeys (phrase) {
     return new Promise(async (resolve, reject) => {
-      var seed = nacl.randomBytes(32)
-      var phrase = bip39.entropyToMnemonic(seed)
-      var keys = await nacl.sign.keyPair.fromSeed(seed)
+      console.log(`phrase`, phrase)
+      if (!phrase) phrase = bip39.entropyToMnemonic(sodium.randombytes_buf(sodium.crypto_box_SEEDBYTES / 2))
+      console.log(`phrase`, phrase)
+      var ken = new TextEncoder().encode(bip39.mnemonicToEntropy(phrase))
+      var keys = sodium.crypto_sign_seed_keypair(ken)
       resolve({
         phrase,
-        privateKey: encodeBase64(keys.secretKey),
+        privateKey: encodeBase64(keys.privateKey),
         publicKey: encodeBase64(keys.publicKey)
       })
     })
@@ -19,16 +21,9 @@ export default ({
     console.log(`Validating ${message}, ${signature}, ${publicKey}`)
     return new Promise(async (resolve, reject) => {
       publicKey = decodeBase64(publicKey)
-      message = decodeUTF8(message)
       signature = decodeBase64(signature)
-      resolve(nacl.sign.detached.verify(message, signature, publicKey))
+      signature = decodeBase64(signature)
+      resolve(sodium.crypto_sign_open(signature, publicKey))
     })
   }
-//   ,
-//   generateKeysFromPhrase (phrase) {
-//     return new Promise(async (resolve, reject) => {
-//       var typedArray = new Uint8Array(bip39.mnemonicToEntropy(phrase).match(/[\da-f]{2}/gi).map(x => parseInt(x, 16)))
-//       var keys = await nacl.sign.keyPair.fromSeed(typedArray)
-//     })
-//   }
 })
