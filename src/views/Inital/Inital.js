@@ -21,7 +21,7 @@ export default {
         redirectUrl: this.$route.query.redirecturl
       })
       if (this.$route.query.scope && this.$route.query.appid && this.$route.query.publickey) {
-        this.setScope(this.$route.query.scope.split(','))
+        this.setScope(this.$route.query.scope)
         this.setAppId(this.$route.query.appid)
         this.setAppPublicKey(this.$route.query.publickey)
       }
@@ -32,7 +32,10 @@ export default {
   computed: {
     ...mapGetters([
       'nameCheckStatus',
-      'hash'
+      'hash',
+      'scope',
+      'appId',
+      'appPublicKey'
     ])
   },
   methods: {
@@ -50,7 +53,9 @@ export default {
         this.$router.push({ name: 'register' })
       } else if (val.checked && !val.available) {
         this.loginUser()
-        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}`, '_self')
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}`, '_self')
+        }
         this.$router.push({ name: 'login' })
       }
     }

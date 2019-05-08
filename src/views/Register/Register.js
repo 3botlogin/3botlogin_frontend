@@ -93,8 +93,10 @@ export default {
       this.step++
     },
     openApp () {
-      // TODO add doublename and email to the mix
-      window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}`, '_self')
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        console.log(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`)
+        window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`, '_self')
+      }
     }
   },
   watch: {
