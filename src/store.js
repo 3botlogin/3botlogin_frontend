@@ -132,13 +132,26 @@ export default new Vuex.Store({
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
-        firstTime
+        firstTime,
+        scope: context.getters.scope,
+        appId: context.getters.appId,
+        appPublicKey: context.getters.appPublicKey
       })
     },
     resendNotification (context) {
+      console.log(`resending`, {
+        doubleName: context.getters.doubleName,
+        state: context.getters.hash,
+        scope: context.getters.scope,
+        appId: context.getters.appId,
+        appPublicKey: context.getters.appPublicKey
+      })
       socketService.emit('resend', {
         doubleName: context.getters.doubleName,
-        state: context.getters.hash
+        state: context.getters.hash,
+        scope: context.getters.scope,
+        appId: context.getters.appId,
+        appPublicKey: context.getters.appPublicKey
       })
     },
     forceRefetchStatus (context) {
