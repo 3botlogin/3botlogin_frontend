@@ -1,5 +1,5 @@
 import bip39 from 'bip39'
-import { encodeBase64, decodeUTF8, decodeBase64 } from 'tweetnacl-util'
+import { encodeBase64, decodeBase64 } from 'tweetnacl-util'
 const sodium = require('libsodium-wrappers')
 
 export default ({
@@ -18,12 +18,11 @@ export default ({
     })
   },
   validateSignature (message, signature, publicKey) {
-    console.log(`Validating ${message}, ${signature}, ${publicKey}`)
     return new Promise(async (resolve, reject) => {
       publicKey = decodeBase64(publicKey)
       signature = decodeBase64(signature)
-      signature = decodeBase64(signature)
-      resolve(sodium.crypto_sign_open(signature, publicKey))
+      console.log(`message`, message)
+      resolve(sodium.crypto_sign_verify_detached(signature, message, publicKey))
     })
   }
 })
