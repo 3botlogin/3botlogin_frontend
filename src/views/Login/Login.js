@@ -30,10 +30,10 @@ export default {
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
         var union = ''
-        if (this.redirectUrl.indexOf('?' >= 0)) {
-          union = '?'
-        } else {
+        if (this.redirectUrl.indexOf('?') >= 0) {
           union = '&'
+        } else {
+          union = '?'
         }
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         window.location.href = url
