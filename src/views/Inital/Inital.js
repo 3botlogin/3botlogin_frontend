@@ -1,20 +1,29 @@
 import { mapActions, mapGetters } from 'vuex'
+var cookies = require('vue-cookies');
+
 export default {
   name: 'inital',
   components: {},
   props: [],
   data () {
     return {
+      firstvisit:false,
+      appid:"",
       doubleName: '',
       valid: false,
-      nameRegex: new RegExp(/^(\w+\.\w+)$/),
+      nameRegex: new RegExp(/^(\w+)$/),
       nameRules: [
         v => !!v || 'Name is required',
-        v => this.nameRegex.test(v) || 'Name must contain 2 sections separated by a dot'
+        v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
       ]
     }
   },
   mounted () {
+    this.firstvisit = !cookies.get("firstvisit")
+    if(this.firstvisit) {
+      cookies.set("firstvisit", true)
+    }
+    this.appid = this.$route.query.appid
     if (this.$route.query && this.$route.query.state && this.$route.query.redirecturl) {
       this.$store.dispatch('saveState', {
         hash: this.$route.query.state,
@@ -47,6 +56,7 @@ export default {
       'setAppPublicKey'
     ])
   },
+
   watch: {
     nameCheckStatus (val) {
       if (val.checked && val.available) {

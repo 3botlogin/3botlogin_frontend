@@ -11,15 +11,38 @@
         </v-toolbar>
         <v-form v-model="valid" @submit.prevent="identify(doubleName)">
           <v-card-text>
-            <p class="subheading">
-              Hi! What's your name?
+              <v-stepper v-if="firstvisit" class="elevation-0" flat>
+                  <v-stepper-header class="elevation-0">
+                    <v-stepper-step color="accent" step="1">Personal info</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step color="accent" step="2">Your key</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step color="accent" step="3">Finishing</v-stepper-step>
+                  </v-stepper-header>
+              </v-stepper>
+            <p class="subheading" style="width:50%; margin: auto; padding-bottom: 30px;" v-if="firstvisit">
+                Hi!
+                <br>
+                <br>
+                <span class="font-weight-bold">{{appid}}</span><span v-if="!appid">You were redirected by a service that</span> is using the 3bot application for decentralized login. 
+                This is a passwordless and fully secure system.
+                 Not a single person in the world will be able to login to your account (not even us). 
+                 Please choose a name, which will later be the address of your digital avatar on the web.
+                 <br>
+                 <br>
+                 <a target="_blank" href="https://www.youtube.com/embed/4exjbFvnGkk">More info.</a>
             </p>
-            <v-text-field :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
-              label="Double name" hint="Give in your double name separated by a dot" required></v-text-field>
+            <p class="subheading" v-if="!firstvisit">
+                Hi! What is your 3bot name?
+            </p>
+            <v-text-field style="width: 90%;" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
+              label="Name" hint="Fill in your name" required></v-text-field>
+              <br><p v-if="doubleName">Your 3bot address: {{doubleName}}.3bot</p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn type="submit" flat :disabled="nameCheckStatus.checking || !valid">Continue</v-btn>
+            <p v-if="!nameCheckStatus.checking && valid">{{nameCheckStatus.available ? "This account doesn't exist yet." :  "This account already exists."}}</p>
+            <v-btn type="submit" flat :disabled="nameCheckStatus.checking || !valid">{{nameCheckStatus.available ? "Register" :  "Sign in"}}</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
