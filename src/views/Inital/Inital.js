@@ -53,7 +53,8 @@ export default {
       'loginUser',
       'setScope',
       'setAppId',
-      'setAppPublicKey'
+      'setAppPublicKey',
+      'checkName'
     ])
   },
 

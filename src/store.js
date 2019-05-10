@@ -91,7 +91,7 @@ export default new Vuex.Store({
       socketService.emit('checkname', { doubleName })
       context.commit('setNameCheckStatus', {
         checked: false,
-        checking: true,
+        checking: false,
         available: false
       })
     },
