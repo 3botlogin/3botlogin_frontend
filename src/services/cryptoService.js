@@ -6,10 +6,13 @@ export default ({
   generateKeys (phrase) {
     return new Promise(async (resolve, reject) => {
       console.log(`phrase`, phrase)
-      if (!phrase) phrase = bip39.entropyToMnemonic(sodium.randombytes_buf(sodium.crypto_box_SEEDBYTES / 2))
+      if (!phrase) phrase = bip39.generateMnemonic(256)
       console.log(`phrase`, phrase)
-      var ken = new TextEncoder().encode(bip39.mnemonicToEntropy(phrase))
-      var keys = sodium.crypto_sign_seed_keypair(ken)
+      var ken = bip39.mnemonicToEntropy(phrase)
+
+      const fromHexString = hexString => new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))
+
+      var keys = sodium.crypto_sign_seed_keypair(fromHexString(ken))
       resolve({
         phrase,
         privateKey: encodeBase64(keys.privateKey),
