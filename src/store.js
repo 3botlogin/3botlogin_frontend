@@ -77,6 +77,7 @@ export default new Vuex.Store({
       context.commit('setRedirectUrl', payload.redirectUrl)
     },
     identify (context, doubleName) {
+      doubleName = `${doubleName}.3bot`
       context.commit('setNameCheckStatus', {
         checked: false,
         checking: true,
