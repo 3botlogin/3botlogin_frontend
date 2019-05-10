@@ -86,6 +86,15 @@ export default new Vuex.Store({
       context.commit('setDoubleName', doubleName)
       socketService.emit('identify', { doubleName })
     },
+    checkName (context, doubleName) {
+      doubleName = `${doubleName}.3bot`
+      socketService.emit('checkname', { doubleName })
+      context.commit('setNameCheckStatus', {
+        checked: false,
+        checking: true,
+        available: false
+      })
+    },
     SOCKET_nameknown (context) {
       context.commit('setNameCheckStatus', {
         checked: true,
