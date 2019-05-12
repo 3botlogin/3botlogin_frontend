@@ -214,6 +214,16 @@ export default new Vuex.Store({
         })
       }
     },
+    checkEmailVerification (user, success) { // callback called if verified
+      axios.get(`${config.openkycurl}users/${user}`).then(async verificationStatus => {
+        console.log(`Validating signature ${verificationStatus}`)
+        if (verificationStatus.verified === '1') {
+          success()
+        } else {
+          console.log('user not verified yet!')
+        }
+      }).catch()
+    },
     setScope (context, scope) {
       context.commit('setScope', scope)
     },
@@ -236,6 +246,7 @@ export default new Vuex.Store({
     emailVerificationStatus: state => state.emailVerificationStatus,
     scope: state => state.scope,
     appId: state => state.appId,
-    appPublicKey: state => state.appPublicKey
+    appPublicKey: state => state.appPublicKey,
+    checkEmailVerification: state => state.checkEmailVerification
   }
 })

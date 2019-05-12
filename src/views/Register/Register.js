@@ -59,7 +59,8 @@ export default {
     ...mapActions([
       'generateKeys',
       'registerUser',
-      'forceRefetchStatus'
+      'forceRefetchStatus',
+      'checkEmailVerification'
     ]),
     lostFocus () {
       console.log(`Lost focus, set flag`)
@@ -121,7 +122,18 @@ export default {
     },
     signed (val) {
       if (val && this.step === 3) {
-        window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${this.signed}`
+        this.step++
+        var redirect = function () {
+          window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${this.signed}`
+        }
+        var keepCheckingForVerification = function () {
+          setTimeout(
+            function () {
+              this.checkEmailVerification(this.doubleName, redirect)
+              keepCheckingForVerification()
+            }, 1000)
+        }
+        keepCheckingForVerification()
       }
     }
   }
