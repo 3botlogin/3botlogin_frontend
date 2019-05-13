@@ -184,8 +184,8 @@ export default new Vuex.Store({
         }).then(message => {
           axios.get(`${config.openkycurl}keys`).then(async keys => {
             console.log(`Validating signature`)
-            cryptoService.validateSignature(message.data.email, message.data.signature, keys.data.public).then(validity => {
-              console.log(validity)
+            cryptoService.validateSignature(message.data.email, message.data.signature, keys.data.public).then(() => {
+              axios.post(`${config.apiurl}api/users/${data.userId}/emailverified`)
               context.commit('setEmailVerificationStatus', {
                 checked: true,
                 checking: false,
