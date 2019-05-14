@@ -4,10 +4,12 @@ import socketService from './services/socketService'
 import cryptoService from './services/cryptoService'
 import axios from 'axios'
 import config from '../public/config'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     hash: null,
     redirectUrl: null,
