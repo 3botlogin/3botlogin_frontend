@@ -1,5 +1,5 @@
 import { mapActions, mapGetters } from 'vuex'
-var cookies = require('vue-cookies');
+var cookies = require('vue-cookies')
 
 export default {
   name: 'inital',
@@ -7,21 +7,22 @@ export default {
   props: [],
   data () {
     return {
-      firstvisit:false,
-      appid:"",
+      firstvisit: false,
+      appid: '',
       doubleName: '',
       valid: false,
       nameRegex: new RegExp(/^(\w+)$/),
       nameRules: [
         v => !!v || 'Name is required',
         v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
-      ]
+      ],
+      continueToLogin: false
     }
   },
   mounted () {
-    this.firstvisit = !cookies.get("firstvisit")
-    if(this.firstvisit) {
-      cookies.set("firstvisit", true)
+    this.firstvisit = !cookies.get('firstvisit')
+    if (this.firstvisit) {
+      cookies.set('firstvisit', true)
     }
     this.appid = this.$route.query.appid
     if (this.$route.query && this.$route.query.state && this.$route.query.redirecturl) {
@@ -55,20 +56,21 @@ export default {
       'setAppId',
       'setAppPublicKey',
       'checkName'
-    ])
-  },
-
-  watch: {
-    nameCheckStatus (val) {
-      if (val.checked && val.available) {
-        this.$router.push({ name: 'register' })
-      } else if (val.checked && !val.available) {
-        this.loginUser()
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}`, '_self')
-        }
-        this.$router.push({ name: 'login' })
+    ]),
+    registerOrLogim () {
+      if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
+      else this.login()
+    },
+    login () {
+      this.loginUser()
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}`, '_self')
       }
+      this.$router.push({ name: 'login' })
+    },
+    register () {
+      this.identify(this.doubleName)
+      this.$router.push({ name: 'register' })
     }
   }
 }

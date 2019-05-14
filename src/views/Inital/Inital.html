@@ -9,7 +9,7 @@
             Identify yourself
           </h1>
         </v-toolbar>
-        <v-form v-model="valid" @submit.prevent="identify(doubleName)">
+        <v-form v-model="valid" @submit.prevent="registrOrLogin">
           <v-card-text>
               <v-stepper v-if="firstvisit" class="elevation-0" flat>
                   <v-stepper-header class="elevation-0">
@@ -35,9 +35,9 @@
             <p class="subheading" v-if="!firstvisit">
                 Hi! What is your 3bot name?
             </p>
-            <v-text-field v-on:input="checkName(doubleName)" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
-              label="Name" hint="Fill in your name" required></v-text-field>
-              <br><p v-if="doubleName">Your 3bot address: {{doubleName}}.3bot</p>
+            <v-text-field @input="checkName(doubleName)" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
+              label="Name" :hint="`Your 3bot address: ${doubleName}.3bot`" required></v-text-field>
+              <br><p v-if="doubleName"></p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -48,4 +48,23 @@
       </v-card>
     </v-flex>
   </v-layout>
+
+  <v-dialog v-model="continueToLogin" width="700">
+    <v-card>
+      <v-toolbar class="primary">
+        <h1 class="headline white--text text-xs-center fw">
+          Do you want to log in?
+        </h1>
+      </v-toolbar>
+      <v-card-text>
+        <p class="subheading">This accountname is already known.</p>
+        <p class="subheading">Do you want to log in with {{doubleName}}.3bot?</p>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn flat @click="continueToLogin = false">No</v-btn>
+        <v-btn flat @click="login">Yup</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </section>
