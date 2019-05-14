@@ -62,7 +62,7 @@ export default {
     },
     login () {
       var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-      this.loginUser({ mobile: isMobile })
+      this.loginUser({ mobile: isMobile, firstTime: false })
       if (isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
