@@ -69,22 +69,15 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setDoubleName (context, doubleName) {
+      context.commit('setDoubleName', `${doubleName}.3bot`)
+    },
     SOCKET_connect (context, payload) {
       console.log(`hi`)
     },
     saveState (context, payload) {
       context.commit('setHash', payload.hash)
       context.commit('setRedirectUrl', payload.redirectUrl)
-    },
-    identify (context, doubleName) {
-      doubleName = `${doubleName}.3bot`
-      context.commit('setNameCheckStatus', {
-        checked: false,
-        checking: true,
-        available: false
-      })
-      context.commit('setDoubleName', doubleName)
-      socketService.emit('identify', { doubleName })
     },
     checkName (context, doubleName) {
       doubleName = `${doubleName}.3bot`

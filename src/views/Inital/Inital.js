@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'identify',
+      'setDoubleName',
       'loginUser',
       'setScope',
       'setAppId',
@@ -58,6 +58,7 @@ export default {
       'checkName'
     ]),
     registerOrLogim () {
+      this.setDoubleName(this.doubleName)
       if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
       else this.login()
     },
@@ -69,7 +70,6 @@ export default {
       this.$router.push({ name: 'login' })
     },
     register () {
-      this.identify(this.doubleName)
       this.$router.push({ name: 'register' })
     }
   }
