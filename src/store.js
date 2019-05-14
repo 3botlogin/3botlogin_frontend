@@ -109,12 +109,12 @@ export default new Vuex.Store({
     },
     registerUser (context, data) {
       console.log(`Register user`)
-      context.dispatch('loginUser', true)
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
         email: data.email,
         publicKey: context.getters.keys.publicKey
       })
+      context.dispatch('loginUser', { firstTime: true })
       axios.post(`${config.openkycurl}users`, {
         'user_id': context.getters.doubleName,
         'email': data.email,
@@ -132,12 +132,13 @@ export default new Vuex.Store({
     SOCKET_signed (context, data) {
       context.commit('setSigned', data)
     },
-    loginUser (context, firstTime = false) {
-      context.commit('setFirstTime', firstTime)
+    loginUser (context, data) {
+      context.commit('setFirstTime', data.firstTime)
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
-        firstTime,
+        firstTime: data.firstTime,
+        mobile: data.mobile,
         scope: context.getters.scope,
         appId: context.getters.appId,
         appPublicKey: context.getters.appPublicKey

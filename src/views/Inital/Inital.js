@@ -25,16 +25,14 @@ export default {
       cookies.set('firstvisit', true)
     }
     this.appid = this.$route.query.appid
-    if (this.$route.query && this.$route.query.state && this.$route.query.redirecturl) {
+    if (this.$route.query) {
       this.$store.dispatch('saveState', {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
       })
-      if (this.$route.query.scope && this.$route.query.appid && this.$route.query.publickey) {
-        this.setScope(this.$route.query.scope)
-        this.setAppId(this.$route.query.appid)
-        this.setAppPublicKey(this.$route.query.publickey)
-      }
+      this.setScope(this.$route.query.scope || null)
+      this.setAppId(this.$route.query.appid || null)
+      this.setAppPublicKey(this.$route.query.publickey || null)
     } else {
       this.$router.push('error')
     }
@@ -63,9 +61,14 @@ export default {
       else this.login()
     },
     login () {
-      this.loginUser()
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        window.open(`threebot://login/?hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}`, '_self')
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      this.loginUser({ mobile: isMobile })
+      if (isMobile) {
+        var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
+        if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
+        if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
+        if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
+        window.open(url)
       }
       this.$router.push({ name: 'login' })
     },
