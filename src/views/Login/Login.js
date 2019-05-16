@@ -14,7 +14,8 @@ export default {
       'signed',
       'redirectUrl',
       'doubleName',
-      'firstTime'
+      'firstTime',
+      'randomImageId'
     ])
   },
   mounted () {

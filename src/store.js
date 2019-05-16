@@ -30,7 +30,8 @@ export default new Vuex.Store({
     firstTime: null,
     scope: null,
     appId: null,
-    appPublicKey: null
+    appPublicKey: null,
+    randomImageId: null
   },
   mutations: {
     setNameCheckStatus (state, status) {
@@ -68,6 +69,9 @@ export default new Vuex.Store({
     },
     setAppPublicKey (state, appPublicKey) {
       state.appPublicKey = appPublicKey
+    },
+    setRandomImageId (state) {
+      state.randomImageId = Math.floor(Math.random() * 266)
     }
   },
   actions: {
@@ -125,10 +129,19 @@ export default new Vuex.Store({
       context.commit('setScannedFlagUp', true)
     },
     SOCKET_signed (context, data) {
-      context.commit('setSigned', data)
+      console.log(context.getters.randomImageId)
+      console.log(data.selectedImageId)
+      if (data.selectedImageId !== context.getters.randomImageId) {
+        context.dispatch('resendNotification')
+      } else {
+        context.commit('setSigned', data)
+      }
     },
     loginUser (context, data) {
+      console.log('setRandomImageId: ' + context.getters.randomImageId)
       context.commit('setFirstTime', data.firstTime)
+      context.commit('setRandomImageId')
+      console.log('setRandomImageId: ' + context.getters.randomImageId)
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
@@ -136,23 +149,19 @@ export default new Vuex.Store({
         mobile: data.mobile,
         scope: context.getters.scope,
         appId: context.getters.appId,
-        appPublicKey: context.getters.appPublicKey
+        appPublicKey: context.getters.appPublicKey,
+        randomImageId: context.getters.randomImageId
       })
     },
     resendNotification (context) {
-      console.log(`resending`, {
-        doubleName: context.getters.doubleName,
-        state: context.getters.hash,
-        scope: context.getters.scope,
-        appId: context.getters.appId,
-        appPublicKey: context.getters.appPublicKey
-      })
+      context.commit('setRandomImageId')
       socketService.emit('resend', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
         scope: context.getters.scope,
         appId: context.getters.appId,
-        appPublicKey: context.getters.appPublicKey
+        appPublicKey: context.getters.appPublicKey,
+        randomImageId: context.getters.randomImageId
       })
     },
     forceRefetchStatus (context) {
@@ -256,6 +265,7 @@ export default new Vuex.Store({
     emailVerificationStatus: state => state.emailVerificationStatus,
     scope: state => state.scope,
     appId: state => state.appId,
-    appPublicKey: state => state.appPublicKey
+    appPublicKey: state => state.appPublicKey,
+    randomImageId: state => state.randomImageId
   }
 })

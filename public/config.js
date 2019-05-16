@@ -1,4 +1,4 @@
 export default ({
-  apiurl: 'https://login.threefold.me/',
-  openkycurl: 'https://openkyc.live/'
+  apiurl: 'http://192.168.2.80:5000/',
+  openkycurl: 'http://192.168.2.80:5005/'
 })
