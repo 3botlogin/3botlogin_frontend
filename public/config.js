@@ -1,4 +1,4 @@
 export default ({
-  apiurl: 'http://localhost:5000',
-  openkycurl: 'http://localhost:5005/'
+  apiurl: 'http://192.168.2.60:5000',
+  openkycurl: 'http://192.168.2.60:5005/'
 })
