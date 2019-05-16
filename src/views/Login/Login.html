@@ -11,7 +11,8 @@
           <v-card-text>
             <v-layout column align-center>
               <v-progress-circular :size="100" :width="15" color="accent" indeterminate></v-progress-circular>
-              <p class="subheading pt-3">Please check your phone.</p>
+              <p class="subheading pt-3" v-if="$route.params.again">Please give in your pincode again.</p>
+              <p class="subheading pt-3" v-else>Please check your phone.</p>
               <v-btn class="accent" @click="resendNotification" v-if="!firstTime">
                 <v-icon left>
                   refresh

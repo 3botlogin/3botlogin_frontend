@@ -9,7 +9,7 @@ export default {
   props: [],
   data () {
     return {
-      step: 1,
+      step: 0,
       email: '',
       valid: false,
       alone: false,
@@ -23,7 +23,9 @@ export default {
         v => this.emailRegex.test(v) || 'Email doesn\'t seems valid'
       ],
       didLeavePage: false,
-      rechecked: false
+      rechecked: false,
+      scannedFlag: false,
+      mailsent: false
     }
   },
   computed: {
@@ -36,7 +38,8 @@ export default {
       'scannedFlagUp',
       'scope',
       'appId',
-      'appPublicKey'
+      'appPublicKey',
+      'emailVerificationStatus'
     ]),
     qrText () {
       return JSON.stringify({
@@ -60,7 +63,8 @@ export default {
       'generateKeys',
       'registerUser',
       'forceRefetchStatus',
-      'checkEmailVerification'
+      'checkEmailVerification',
+      'sendValidationEmail'
     ]),
     lostFocus () {
       console.log(`Lost focus, set flag`)
@@ -116,24 +120,17 @@ export default {
       }
     },
     scannedFlagUp (val) {
-      if (val && this.step === 3) {
-        this.$router.push({ name: 'login' })
+      if (val) {
+        this.scannedFlag = true
       }
     },
     signed (val) {
-      if (val && this.step === 3) {
-        this.step++
-        var redirect = function () {
-          window.location.href = `${this.redirectUrl}?username=${this.doubleName}&signedhash=${this.signed}`
+      if (val) {
+        this.step = 4
+        if (!this.mailsent) {
+          this.sendValidationEmail({ email: this.email })
+          this.mailsent = true
         }
-        var keepCheckingForVerification = function () {
-          setTimeout(
-            function () {
-              this.checkEmailVerification(this.doubleName, redirect)
-              keepCheckingForVerification()
-            }, 1000)
-        }
-        keepCheckingForVerification()
       }
     }
   }

@@ -29,7 +29,7 @@ export default {
       if (val) {
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
-        var union = ''
+        var union = '&'
         if (this.redirectUrl.indexOf('?') >= 0) {
           union = '&'
         } else {

@@ -72,7 +72,12 @@ export default new Vuex.Store({
   },
   actions: {
     setDoubleName (context, doubleName) {
-      context.commit('setDoubleName', `${doubleName}.3bot`)
+      var extention = '.3bot'
+      if (doubleName.indexOf(extention) >= 0) {
+        context.commit('setDoubleName', doubleName)
+      } else {
+        context.commit('setDoubleName', `${doubleName}.3bot`)
+      }
     },
     SOCKET_connect (context, payload) {
       console.log(`hi`)
@@ -115,16 +120,6 @@ export default new Vuex.Store({
         publicKey: context.getters.keys.publicKey
       })
       context.dispatch('loginUser', { firstTime: true })
-      axios.post(`${config.openkycurl}users`, {
-        'user_id': context.getters.doubleName,
-        'email': data.email,
-        'callback_url': `${window.location.protocol}//${window.location.host}/verifyemail`,
-        'public_key': context.getters.keys.publicKey
-      }).then(x => {
-        console.log(`Mail has been sent`)
-      }).catch(e => {
-        alert(e)
-      })
     },
     SOCKET_scannedFlag (context) {
       context.commit('setScannedFlagUp', true)
@@ -164,6 +159,28 @@ export default new Vuex.Store({
       axios.get(`${config.apiurl}api/forcerefetch?hash=${context.getters.hash}&doublename=${context.getters.doubleName}`).then(response => {
         if (response.data.scanned) context.commit('setScannedFlagUp', response.data.scanned)
         if (response.data.signed) context.commit('setSigned', response.data.signed)
+      }).catch(e => {
+        alert(e)
+      })
+    },
+    sendValidationEmail (context, data) {
+      var callbackUrl = `${window.location.protocol}//${window.location.host}/verifyemail`
+
+      callbackUrl += `?hash=${context.getters.hash}`
+      callbackUrl += `&redirecturl=${context.getters.redirectUrl}`
+      callbackUrl += `&doublename=${context.getters.doubleName}`
+
+      if (context.getters.scope) callbackUrl += `&scope=${context.getters.scope}`
+      if (context.getters.appPublicKey) callbackUrl += `&publickey=${context.getters.appPublicKey}`
+      if (context.getters.appId) callbackUrl += `&appid=${context.getters.appId}`
+
+      axios.post(`${config.openkycurl}users`, {
+        'user_id': context.getters.doubleName,
+        'email': data.email,
+        'callback_url': callbackUrl,
+        'public_key': context.getters.keys.publicKey
+      }).then(x => {
+        console.log(`Mail has been sent`)
       }).catch(e => {
         alert(e)
       })
@@ -210,15 +227,12 @@ export default new Vuex.Store({
         })
       }
     },
-    checkEmailVerification (user, success) { // callback called if verified
-      axios.get(`${config.openkycurl}users/${user}`).then(async verificationStatus => {
-        console.log(`Validating signature ${verificationStatus}`)
-        if (verificationStatus.verified === '1') {
-          success()
-        } else {
-          console.log('user not verified yet!')
-        }
-      }).catch()
+    SOCKET_emailverified (context) {
+      context.commit('setEmailVerificationStatus', {
+        checked: true,
+        checking: false,
+        valid: true
+      })
     },
     setScope (context, scope) {
       context.commit('setScope', scope)
@@ -242,7 +256,6 @@ export default new Vuex.Store({
     emailVerificationStatus: state => state.emailVerificationStatus,
     scope: state => state.scope,
     appId: state => state.appId,
-    appPublicKey: state => state.appPublicKey,
-    checkEmailVerification: state => state.checkEmailVerification
+    appPublicKey: state => state.appPublicKey
   }
 })
