@@ -131,6 +131,10 @@ export default new Vuex.Store({
     SOCKET_signed (context, data) {
       console.log(context.getters.randomImageId)
       console.log(data.selectedImageId)
+      if (data.selectedImageId == null) {
+        context.commit('setSigned', data)
+        return
+      }
       if (!context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
         context.dispatch('resendNotification')
       } else {
