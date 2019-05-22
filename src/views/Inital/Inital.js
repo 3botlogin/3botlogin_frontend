@@ -27,6 +27,9 @@ export default {
       this.url = `${this.$route.query.doublename} && ${this.$route.query.logintoken}`
       this.loginUser({ mobile: true, firstTime: false, logintoken: this.$route.query.logintoken })
     }
+    if (this.$route.query.logintoken) {
+      this.spinner = true;
+    }
     this.firstvisit = !cookies.get('firstvisit')
     if (this.firstvisit) {
       cookies.set('firstvisit', true)
