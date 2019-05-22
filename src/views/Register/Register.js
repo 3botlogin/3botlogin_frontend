@@ -119,10 +119,8 @@ export default {
         this.openApp()
       }
     },
-    scannedFlagUp (val) {
-      if (val) {
-        this.scannedFlag = true
-      }
+    scannedFlagUp () {
+      this.scannedFlag = true
     },
     signed (val) {
       if (val) {

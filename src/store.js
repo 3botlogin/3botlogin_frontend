@@ -129,6 +129,7 @@ export default new Vuex.Store({
       context.commit('setScannedFlagUp', true)
     },
     SOCKET_signed (context, data) {
+<<<<<<< HEAD
       console.log(context.getters.randomImageId)
       console.log(data.selectedImageId)
       if (data.selectedImageId == null) {
@@ -136,12 +137,16 @@ export default new Vuex.Store({
         return
       }
       if (!context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
+=======
+      if (data.selectedImageId && !context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
+>>>>>>> 3597bf51ed0a359e79c2d5aa27f3dca99b19474b
         context.dispatch('resendNotification')
       } else {
         context.commit('setSigned', data)
       }
     },
     loginUser (context, data) {
+      context.commit('setSigned', null)
       console.log('setRandomImageId: ' + context.getters.randomImageId)
       context.commit('setFirstTime', data.firstTime)
       context.commit('setRandomImageId')
@@ -154,7 +159,8 @@ export default new Vuex.Store({
         scope: context.getters.scope,
         appId: context.getters.appId,
         appPublicKey: context.getters.appPublicKey,
-        randomImageId: !data.firstTime ? context.getters.randomImageId : null
+        randomImageId: !data.firstTime ? context.getters.randomImageId.toString() : null,
+        logintoken: (data.logintoken || null)
       })
     },
     resendNotification (context) {
@@ -165,7 +171,7 @@ export default new Vuex.Store({
         scope: context.getters.scope,
         appId: context.getters.appId,
         appPublicKey: context.getters.appPublicKey,
-        randomImageId: context.getters.randomImageId
+        randomImageId: context.getters.randomImageId.toString()
       })
     },
     forceRefetchStatus (context) {
