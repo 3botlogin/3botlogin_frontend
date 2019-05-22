@@ -195,6 +195,7 @@ export default new Vuex.Store({
       })
     },
     validateEmail (context, data) {
+      console.log(`Validating email`, data)
       if (data && data.userId && data.verificationCode) {
         context.commit('setEmailVerificationStatus', {
           checked: false,
