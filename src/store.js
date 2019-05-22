@@ -129,17 +129,7 @@ export default new Vuex.Store({
       context.commit('setScannedFlagUp', true)
     },
     SOCKET_signed (context, data) {
-<<<<<<< HEAD
-      console.log(context.getters.randomImageId)
-      console.log(data.selectedImageId)
-      if (data.selectedImageId == null) {
-        context.commit('setSigned', data)
-        return
-      }
-      if (!context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
-=======
       if (data.selectedImageId && !context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
->>>>>>> 3597bf51ed0a359e79c2d5aa27f3dca99b19474b
         context.dispatch('resendNotification')
       } else {
         context.commit('setSigned', data)
