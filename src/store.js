@@ -176,7 +176,7 @@ export default new Vuex.Store({
       var callbackUrl = `${window.location.protocol}//${window.location.host}/verifyemail`
 
       callbackUrl += `?hash=${context.getters.hash}`
-      callbackUrl += `&redirecturl=${context.getters.redirectUrl}`
+      callbackUrl += `&redirecturl=${window.btoa(context.getters.redirectUrl)}`
       callbackUrl += `&doublename=${context.getters.doubleName}`
 
       if (context.getters.scope) callbackUrl += `&scope=${context.getters.scope}`

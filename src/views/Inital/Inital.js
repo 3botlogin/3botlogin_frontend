@@ -17,7 +17,8 @@ export default {
         v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
       ],
       continueToLogin: false,
-      url: ''
+      url: '',
+      spinner: false
     }
   },
   mounted () {
@@ -28,7 +29,7 @@ export default {
       this.loginUser({ mobile: true, firstTime: false, logintoken: this.$route.query.logintoken })
     }
     if (this.$route.query.logintoken) {
-      this.spinner = true;
+      this.spinner = true
     }
     this.firstvisit = !cookies.get('firstvisit')
     if (this.firstvisit) {

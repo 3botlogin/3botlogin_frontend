@@ -39,7 +39,7 @@ export default {
         console.log(`Log in`)
         this.saveState({
           hash: this.$route.query.hash,
-          redirectUrl: this.$route.query.redirecturl
+          redirectUrl: window.atob(this.$route.query.redirecturl)
         })
 
         this.setDoubleName(this.$route.query.doublename)
