@@ -99,8 +99,12 @@ export default {
     },
     openApp () {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        console.log(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`)
-        window.open(`threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&hash=${encodeURIComponent(this.hash)}&scope=${encodeURIComponent(this.scope)}&appId=${encodeURIComponent(this.appId)}&appPublicKey=${encodeURIComponent(this.appPublicKey)}&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`, '_self')
+        var url = `threebot://login/?register=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
+        if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
+        if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
+        if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
+        console.log(url)
+        window.open(url)
       }
     }
   },
