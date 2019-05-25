@@ -2,7 +2,7 @@ import { mapActions, mapGetters } from 'vuex'
 var cookies = require('vue-cookies')
 
 export default {
-  name: 'inital',
+  name: 'initial',
   components: {},
   props: [],
   data () {
