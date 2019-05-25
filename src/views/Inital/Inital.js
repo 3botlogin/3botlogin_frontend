@@ -22,6 +22,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route)
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
