@@ -68,7 +68,8 @@ export default {
       'setScope',
       'setAppId',
       'setAppPublicKey',
-      'checkName'
+      'checkName',
+      'clearCheckStatus'
     ]),
     registerOrLogim () {
       this.setDoubleName(this.doubleName)
@@ -92,6 +93,7 @@ export default {
       this.$router.push({ name: 'register' })
     },
     checkNameAvailability () {
+      this.clearCheckStatus()
       if (this.doubleName) {
         if (this.nameCheckerTimeOut != null) clearTimeout(this.nameCheckerTimeOut)
         this.nameCheckerTimeOut = setTimeout(() => {
