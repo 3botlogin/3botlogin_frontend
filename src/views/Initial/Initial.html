@@ -35,7 +35,7 @@
             <p class="subheading" v-if="!firstvisit">
                 Hi! What is your 3bot name?
             </p>
-            <v-text-field @input="checkName(doubleName)" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
+            <v-text-field @input="checkNameAvailability" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
               label="Name" :hint="`Your 3bot address: ${doubleName}.3bot`" required></v-text-field>
               <br><p v-if="doubleName"></p>
           </v-card-text>

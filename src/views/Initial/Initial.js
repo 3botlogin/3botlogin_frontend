@@ -18,7 +18,8 @@ export default {
       ],
       continueToLogin: false,
       url: '',
-      spinner: false
+      spinner: false,
+      nameCheckerTimeOut: null
     }
   },
   mounted () {
@@ -89,6 +90,14 @@ export default {
     },
     register () {
       this.$router.push({ name: 'register' })
+    },
+    checkNameAvailability () {
+      if (this.doubleName) {
+        if (this.nameCheckerTimeOut != null) clearTimeout(this.nameCheckerTimeOut)
+        this.nameCheckerTimeOut = setTimeout(() => {
+          this.checkName(this.doubleName)
+        }, 500)
+      }
     }
   },
   watch: {

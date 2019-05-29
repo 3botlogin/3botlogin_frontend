@@ -1,4 +1,4 @@
-<template src="./initial.html"></template>
-<script src="./initial.js"></script>
-<style src="./initial.scss" scoped lang="scss"></style>
+<template src="./Initial.html"></template>
+<script src="./Initial.js"></script>
+<style src="./Initial.scss" scoped lang="scss"></style>
 
