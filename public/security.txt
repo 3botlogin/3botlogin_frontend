@@ -1,0 +1,3 @@
+Contact: support@jimber.org
+Contact: info@jimber.org
+Preferred-Languages: en, nl
