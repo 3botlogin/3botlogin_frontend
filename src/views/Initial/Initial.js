@@ -2,7 +2,7 @@ import { mapActions, mapGetters } from 'vuex'
 var cookies = require('vue-cookies')
 
 export default {
-  name: 'inital',
+  name: 'initial',
   components: {},
   props: [],
   data () {
@@ -17,15 +17,21 @@ export default {
         v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
       ],
       continueToLogin: false,
-      url: ''
+      url: '',
+      spinner: false,
+      nameCheckerTimeOut: null
     }
   },
   mounted () {
+    console.log(this.$route)
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
       this.url = `${this.$route.query.doublename} && ${this.$route.query.logintoken}`
       this.loginUser({ mobile: true, firstTime: false, logintoken: this.$route.query.logintoken })
+    }
+    if (this.$route.query.logintoken) {
+      this.spinner = true
     }
     this.firstvisit = !cookies.get('firstvisit')
     if (this.firstvisit) {
@@ -62,7 +68,8 @@ export default {
       'setScope',
       'setAppId',
       'setAppPublicKey',
-      'checkName'
+      'checkName',
+      'clearCheckStatus'
     ]),
     registerOrLogim () {
       this.setDoubleName(this.doubleName)
@@ -84,6 +91,15 @@ export default {
     },
     register () {
       this.$router.push({ name: 'register' })
+    },
+    checkNameAvailability () {
+      this.clearCheckStatus()
+      if (this.doubleName) {
+        if (this.nameCheckerTimeOut != null) clearTimeout(this.nameCheckerTimeOut)
+        this.nameCheckerTimeOut = setTimeout(() => {
+          this.checkName(this.doubleName)
+        }, 500)
+      }
     }
   },
   watch: {

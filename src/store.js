@@ -90,6 +90,13 @@ export default new Vuex.Store({
       context.commit('setHash', payload.hash)
       context.commit('setRedirectUrl', payload.redirectUrl)
     },
+    clearCheckStatus(context) {
+      context.commit('setNameCheckStatus', {
+        checked: false,
+        checking: false,
+        available: false
+      })
+    },
     checkName (context, doubleName) {
       doubleName = `${doubleName}.3bot`
       socketService.emit('checkname', { doubleName })
@@ -176,7 +183,7 @@ export default new Vuex.Store({
       var callbackUrl = `${window.location.protocol}//${window.location.host}/verifyemail`
 
       callbackUrl += `?hash=${context.getters.hash}`
-      callbackUrl += `&redirecturl=${context.getters.redirectUrl}`
+      callbackUrl += `&redirecturl=${window.btoa(context.getters.redirectUrl)}`
       callbackUrl += `&doublename=${context.getters.doubleName}`
 
       if (context.getters.scope) callbackUrl += `&scope=${context.getters.scope}`
@@ -195,6 +202,7 @@ export default new Vuex.Store({
       })
     },
     validateEmail (context, data) {
+      console.log(`Validating email`, data)
       if (data && data.userId && data.verificationCode) {
         context.commit('setEmailVerificationStatus', {
           checked: false,

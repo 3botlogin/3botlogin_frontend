@@ -8,9 +8,9 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   console.log(`to.name == ${to.name}`)
-  if ((to.name !== 'inital' && to.name !== 'error' && to.name !== 'verifyemail') && !store.state.doubleName) {
+  if ((to.name !== 'initial' && to.name !== 'error' && to.name !== 'verifyemail') && !store.state.doubleName) {
     next({
-      name: 'inital'
+      name: 'initial'
     })
   } else {
     next()

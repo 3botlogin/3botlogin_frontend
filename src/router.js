@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Inital from './views/Inital'
+import initial from './views/Initial'
 
 Vue.use(Router)
 
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'inital',
-      component: Inital
+      name: 'initial',
+      component: initial
     },{
       path: '/register',
       name: 'register',
