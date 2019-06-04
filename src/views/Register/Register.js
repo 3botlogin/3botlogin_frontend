@@ -81,7 +81,7 @@ export default {
     },
     confirmDialog () {
       if (this.wasEverAlone) {
-        this.step++
+        this.step = 3
         this.areYouSureDialog = false
       } else {
         this.youWereNeverAloneDialog = true
@@ -95,7 +95,7 @@ export default {
     proceed () {
       this.areYouSureDialog = false
       this.youWereNeverAloneDialog = false
-      this.step++
+      this.step = 3
     },
     openApp () {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
