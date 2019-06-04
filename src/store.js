@@ -90,7 +90,7 @@ export default new Vuex.Store({
       context.commit('setHash', payload.hash)
       context.commit('setRedirectUrl', payload.redirectUrl)
     },
-    clearCheckStatus(context) {
+    clearCheckStatus (context) {
       context.commit('setNameCheckStatus', {
         checked: false,
         checking: false,
