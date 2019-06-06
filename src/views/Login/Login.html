@@ -10,17 +10,23 @@
         <v-form>
           <v-card-text>
             <v-layout column align-center relative>
-              <img class="icon" :src='`/icons/${randomImageId}.png`' height="37"></img>
+              <img class="icon" :src='`/icons/${randomImageId}.png`' height="37" v-if="!isMobile"></img>
               <br />
               <v-progress-circular :size="100" :width="15" color="accent" indeterminate></v-progress-circular>
-              <p class="subheading pt-3" v-if="$route.params.again">Please enter your pincode and select this icon on your mobile phone once again.</p>
+              <p class="subheading pt-3" v-if="$route.params.again && !isMobile">Please enter your pincode and select this icon on your mobile phone once again.</p>
+              <p class="subheading pt-3" v-if="$route.params.again && isMobile">Please enter your pincode on your mobile phone once again.</p>
               <p class="subheading pt-3" v-else>Please enter your pincode and select this icon on your mobile phone.</p>
-              <v-btn class="accent" @click="resendNotification" v-if="!firstTime">
-                <v-icon left>
-                  refresh
-                </v-icon>
-                Resend notification
-              </v-btn>
+              <v-layout column>
+                <v-btn class="accent" @click="resendNotification" v-if="!firstTime && !isMobile">
+                  <v-icon left>
+                    refresh
+                  </v-icon>
+                  Resend notification
+                </v-btn>
+                <v-btn class="accent" @click="openApp" v-if="isMobile">
+                  Open 3Bot app
+                </v-btn>
+              </v-layout>
             </v-layout>
           </v-card-text>
         </v-form>

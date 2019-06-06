@@ -6,7 +6,7 @@ export default {
   props: [],
   data () {
     return {
-
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     }
   },
   computed: {
@@ -15,7 +15,11 @@ export default {
       'redirectUrl',
       'doubleName',
       'firstTime',
-      'randomImageId'
+      'randomImageId',
+      'hash',
+      'scope',
+      'appId',
+      'appPublicKey'
     ])
   },
   mounted () {
@@ -23,7 +27,16 @@ export default {
   methods: {
     ...mapActions([
       'resendNotification'
-    ])
+    ]),
+    openApp () {
+      if (this.isMobile) {
+        var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
+        if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
+        if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
+        if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
+        window.open(url)
+      }
+    }
   },
   watch: {
     signed (val) {

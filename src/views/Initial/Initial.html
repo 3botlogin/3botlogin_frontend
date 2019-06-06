@@ -20,10 +20,7 @@
                     <v-stepper-step color="accent" step="3">Finishing</v-stepper-step>
                   </v-stepper-header>
               </v-stepper>
-            <p class="subheading" style="width:50%; margin: auto; padding-bottom: 30px;" v-if="firstvisit">
-                Hi!
-                <br>
-                <br>
+            <p class="subheading pb-2" v-if="firstvisit">
                 <span class="font-weight-bold">{{appid}}</span><span v-if="!appid">You were redirected by a service that</span> is using the 3bot application for decentralized login. 
                 This is a passwordless and fully secure system.
                  Not a single person in the world will be able to login to your account (not even us). 
@@ -36,7 +33,7 @@
                 Hi! What is your 3bot name?
             </p>
             <v-text-field @input="checkNameAvailability" :disabled="nameCheckStatus.checking" :rules="nameRules" autofocus v-model="doubleName" box
-              label="Name" :hint="`Your 3bot address: ${doubleName}.3bot`" required></v-text-field>
+              label="Name" :hint="doubleName ? `Your 3bot address: ${doubleName}.3bot` : `Whats your 3bot address?`" required></v-text-field>
               <br>
           </v-card-text>
           <v-card-actions>

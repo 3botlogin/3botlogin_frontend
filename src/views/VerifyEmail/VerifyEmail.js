@@ -50,7 +50,6 @@ export default {
 
         var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
         this.loginUser({ mobile: isMobile, firstTime: false })
-
         this.$router.push({ name: 'login', params: { again: true } })
       }
     }

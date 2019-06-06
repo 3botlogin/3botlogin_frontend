@@ -28,6 +28,7 @@ export default new Vuex.Store({
     scannedFlagUp: false,
     signed: null,
     firstTime: null,
+    isMobile: false,
     scope: null,
     appId: null,
     appPublicKey: null,
@@ -72,6 +73,9 @@ export default new Vuex.Store({
     },
     setRandomImageId (state) {
       state.randomImageId = Math.floor(Math.random() * 266)
+    },
+    setIsMobile (state, isMobile) {
+      state.isMobile = isMobile
     }
   },
   actions: {
@@ -136,7 +140,7 @@ export default new Vuex.Store({
       context.commit('setScannedFlagUp', true)
     },
     SOCKET_signed (context, data) {
-      if (data.selectedImageId && !context.getters.firstTime && data.selectedImageId !== context.getters.randomImageId) {
+      if (data.selectedImageId && !context.getters.firstTime && !context.getters.isMobile && data.selectedImageId !== context.getters.randomImageId) {
         context.dispatch('resendNotification')
       } else {
         context.commit('setSigned', data)
@@ -144,10 +148,9 @@ export default new Vuex.Store({
     },
     loginUser (context, data) {
       context.commit('setSigned', null)
-      console.log('setRandomImageId: ' + context.getters.randomImageId)
       context.commit('setFirstTime', data.firstTime)
       context.commit('setRandomImageId')
-      console.log('setRandomImageId: ' + context.getters.randomImageId)
+      context.commit('setIsMobile', data.mobile)
       socketService.emit('login', {
         doubleName: context.getters.doubleName,
         state: context.getters.hash,
@@ -274,6 +277,7 @@ export default new Vuex.Store({
     scope: state => state.scope,
     appId: state => state.appId,
     appPublicKey: state => state.appPublicKey,
+    isMobile: state => state.isMobile,
     randomImageId: state => state.randomImageId
   }
 })
