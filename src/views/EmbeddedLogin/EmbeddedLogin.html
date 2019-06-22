@@ -1,0 +1,36 @@
+<section class="embeddedlogin">
+  <v-flex>
+    <v-card>
+      <v-toolbar class="primary">
+        <h1 class="white--text text-xs-center fw">
+          Log in to {{appId}} with 3Bot
+        </h1>
+      </v-toolbar>
+      <v-container v-if="userKnown && !attemptCreated" bg fill-height grid-list-md>
+        <img class="logo" :src='`/3botlogo.png`' height="100px">
+        <v-card-text class="text">
+          Welcome {{username}}! <br>
+          We seem to already know each other :)
+        </v-card-text>
+        <v-btn @click="requestLogin">Log in</v-btn>
+      </v-container>
+      <v-container v-if="attemptCreated" bg fill-height grid-list-md>
+        <img class="logo" :src='`/3botlogo.png`' height="100px">
+        <v-spacer></v-spacer>
+        <v-btn class="accent" @click="resendNotification" v-if="!firstTime && !isMobile">
+          <v-icon>
+            refresh
+          </v-icon>
+          Resend notification
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-progress-circular :size="60" :width="4" color="accent" indeterminate>
+          <img class="icon" :src='`/icons/${randomImageId}.png`' height="37" v-if="!isMobile"></img>
+        </v-progress-circular>
+        <v-spacer></v-spacer>
+        </v-layout>
+      </v-container>
+    </v-card>
+  </v-flex>
+  </v-layout>
+</section>

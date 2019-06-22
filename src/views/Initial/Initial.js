@@ -71,7 +71,7 @@ export default {
       'checkName',
       'clearCheckStatus'
     ]),
-    registerOrLogim () {
+    registerOrLogin () {
       this.setDoubleName(this.doubleName)
       if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
       else this.login()
