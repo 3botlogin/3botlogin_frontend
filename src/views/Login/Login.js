@@ -51,7 +51,7 @@ export default {
           union = '?'
         }
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        // window.location.href = url
+        window.location.href = url
       }
     }
   }
