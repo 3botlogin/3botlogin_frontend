@@ -36,6 +36,7 @@ export default {
       }
     })
     const username = window.localStorage.getItem("username");
+    console.log("username is known")
     if (username) {
       this.userKnown = true;
       this.username = username;
