@@ -4,7 +4,7 @@ export default {
   name: 'login',
   components: {},
   props: [],
-  data() {
+  data () {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     }
@@ -22,13 +22,13 @@ export default {
       'appPublicKey'
     ])
   },
-  mounted() {
+  mounted () {
   },
   methods: {
     ...mapActions([
       'resendNotification'
     ]),
-    openApp() {
+    openApp () {
       if (this.isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -39,9 +39,9 @@ export default {
     }
   },
   watch: {
-    signed(val) {
+    signed (val) {
       if (val) {
-        window.localStorage.setItem("username", this.doubleName)
+        window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
         var union = '&'

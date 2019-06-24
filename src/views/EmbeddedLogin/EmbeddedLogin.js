@@ -1,11 +1,10 @@
 import { mapGetters, mapActions } from 'vuex'
-import { isContext } from 'vm';
 
 export default {
   name: 'login',
   components: {},
   props: [],
-  data() {
+  data () {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       userKnown: false,
@@ -26,20 +25,25 @@ export default {
       'appPublicKey'
     ])
   },
-  mounted() {
-    this.setAppId(this.$route.query.appId);
+  mounted () {
+    // This is dirty
+    let container = document.getElementsByClassName('container')[0]
+    container.style.margin = 0
+    container.style.padding = 0
+    //
+    this.setAppId(this.$route.query.appId)
     window.addEventListener('message', (e) => {
-      console.log("Got a message", e.data)
+      console.log('Got a message', e.data)
       if (e.data.type === '3botlogin-info') {
         console.log(e.data.data)
         this.createLoginAttempt(e.data.data)
       }
     })
-    const username = window.localStorage.getItem("username");
-    console.log("username is known")
+    const username = window.localStorage.getItem('username')
+    console.log('username is known')
     if (username) {
-      this.userKnown = true;
-      this.username = username;
+      this.userKnown = true
+      this.username = username
       window.parent.postMessage({ type: '3botlogin-user-known-alert' }, '*')
     }
   },
@@ -50,7 +54,7 @@ export default {
       'setAppId',
       'setScope',
       'setAppPublicKey',
-      'loginUser',
+      'loginUser'
     ]),
     // openApp() {
     //   if (this.isMobile) {
@@ -61,12 +65,12 @@ export default {
     //     window.open(url)
     //   }
     // },
-    requestLogin() {
+    requestLogin () {
       window.parent.postMessage({ type: '3botlogin-request-login-info' }, '*')
     },
-    createLoginAttempt(data) {
+    createLoginAttempt (data) {
       if (data.scope && data.publicKey && data.state) {
-        this.attemptCreated = true;
+        this.attemptCreated = true
         this.setHash(data.state)
         this.setScope(data.scope)
         this.setAppPublicKey(data.publicKey)
@@ -75,23 +79,12 @@ export default {
     }
   },
   watch: {
-    signed(val) {
+    signed (val) {
       if (val) {
-        console.log("ja gedomme!", val)
+        console.log('ja gedomme!', val)
         val.username = this.doubleName
         val.signedhash = val.signedHash
-        window.parent.postMessage({type:'3botlogin-finished', data:val}, "*")
-        // window.localStorage.setItem("username", "test")
-        // var signedHash = encodeURIComponent(val.signedHash)
-        // var data = encodeURIComponent(JSON.stringify(val.data))
-        // var union = '&'
-        // if (this.redirectUrl.indexOf('?') >= 0) {
-        //   union = '&'
-        // } else {
-        //   union = '?'
-        // }
-        // var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        // // window.location.href = url
+        window.parent.postMessage({ type: '3botlogin-finished', data: val }, '*')
       }
     }
   }
