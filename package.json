@@ -13,6 +13,7 @@
     "bip39": "^2.5.0",
     "libsodium": "^0.7.4",
     "libsodium-wrappers": "^0.7.4",
+    "socket.io": "^2.2.0",
     "tweetnacl": "^1.0.1",
     "tweetnacl-util": "^0.15.0",
     "vue": "^2.6.6",
