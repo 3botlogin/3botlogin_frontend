@@ -25,7 +25,8 @@ export default {
       didLeavePage: false,
       rechecked: false,
       scannedFlag: false,
-      mailsent: false
+      mailsent: false,
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     }
   },
   computed: {
@@ -98,6 +99,7 @@ export default {
       this.step = 3
     },
     openApp () {
+      if (this.isMobile) {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -110,6 +112,7 @@ export default {
           window.open(url)
         }
       }
+    }
     }
   },
   watch: {

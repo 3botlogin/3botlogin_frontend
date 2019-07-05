@@ -57,11 +57,11 @@
                   <p>Follow the instructions on your phone.</p>
                 </div>
                 <div class="text-xs-center">
-                  <div v-if="isMobile">
+                  <div v-if="!isMobile">
                   <p>Scan this QR with the 3Bot app.</p>
                   <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   </div>
-                  <div v-if="!isMobile">
+                  <div v-if="isMobile">
                     <p>Press the button!</p>
                     <v-btn class="accent" @click="openApp">
                       Open 3Bot app
@@ -75,7 +75,6 @@
                     <img src="applestore.png" height="50"/>
                   </a>
                 </div>
-                
               </v-layout>
             </v-stepper-content>
             <v-stepper-content step="4">
