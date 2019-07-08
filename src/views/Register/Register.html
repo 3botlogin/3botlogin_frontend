@@ -56,9 +56,17 @@
                   <v-progress-circular :size="100" :width="15" color="accent" class="mb-4" indeterminate></v-progress-circular>
                   <p>Follow the instructions on your phone.</p>
                 </div>
-                <div class="text-xs-center" v-else>
+                <div class="text-xs-center">
+                  <div v-if="!isMobile">
                   <p>Scan this QR with the 3Bot app.</p>
                   <vue-qr :text="qrText" @click="openApp"></vue-qr>
+                  </div>
+                  <div v-if="isMobile">
+                    <p>Press the button!</p>
+                    <v-btn class="accent" @click="openApp">
+                      Open 3Bot app
+                    </v-btn>
+                  </div>
                   <p>Download this app on the Google Play/Apple App Store.</p>
                   <a class="mx-2" href="https://play.google.com/store/apps/details?id=org.jimber.threebotlogin" target="_blank">
                     <img src="googleplay.png" height="50"/>
