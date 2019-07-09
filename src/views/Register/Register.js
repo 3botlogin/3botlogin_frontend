@@ -40,7 +40,8 @@ export default {
       'scope',
       'appId',
       'appPublicKey',
-      'emailVerificationStatus'
+      'emailVerificationStatus',
+      'phrase'
     ]),
     qrText () {
       return JSON.stringify({
@@ -50,7 +51,8 @@ export default {
         email: this.email,
         scope: this.scope,
         appId: this.appId,
-        appPublicKey: this.appPublicKey
+        appPublicKey: this.appPublicKey,
+        phrase: this.keys.phrase
       })
     }
   },
