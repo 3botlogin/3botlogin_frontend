@@ -61,7 +61,9 @@ export default {
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
           alert("second")
           window.location = url
-        }   
+        } 
+        alert("notamobile")
+          window.location = url  
       }
     }
   }
