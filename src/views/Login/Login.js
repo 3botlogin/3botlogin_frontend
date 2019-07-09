@@ -35,7 +35,7 @@ export default {
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
         if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
         console.log(url)
-        window.location.replace(url)
+        window.open(url)
       }
     }
   },
