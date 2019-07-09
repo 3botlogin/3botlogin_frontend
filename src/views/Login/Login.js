@@ -54,7 +54,11 @@ export default {
           union = '?'
         }
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        window.location.href = url
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          window.location.href = url
+        } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          window.location.replace(url)
+        }   
       }
     }
   }
