@@ -36,9 +36,11 @@ export default {
         if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
         console.log(url)
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          window.location.replace(url)
+          alert(1)
+          window.location = url
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          window.open(url)
+          alert(2)
+          window.location = url
         }  
       }
     }
