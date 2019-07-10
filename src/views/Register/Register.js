@@ -25,7 +25,8 @@ export default {
       didLeavePage: false,
       rechecked: false,
       scannedFlag: false,
-      mailsent: false
+      mailsent: false,
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     }
   },
   computed: {
@@ -39,7 +40,8 @@ export default {
       'scope',
       'appId',
       'appPublicKey',
-      'emailVerificationStatus'
+      'emailVerificationStatus',
+      'phrase'
     ]),
     qrText () {
       return JSON.stringify({
@@ -49,7 +51,8 @@ export default {
         email: this.email,
         scope: this.scope,
         appId: this.appId,
-        appPublicKey: this.appPublicKey
+        appPublicKey: this.appPublicKey,
+        phrase: this.keys.phrase
       })
     }
   },
@@ -97,8 +100,8 @@ export default {
       this.youWereNeverAloneDialog = false
       this.step = 3
     },
-    openApp () {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    openApp () { 
+      if(this.isMobile) {
         var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`

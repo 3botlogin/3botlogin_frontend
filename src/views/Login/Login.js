@@ -29,7 +29,7 @@ export default {
       'resendNotification'
     ]),
     openApp () {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      if (this.isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
@@ -57,13 +57,13 @@ export default {
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           alert("first")
-          window.location = url
+          window.location.href = url
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
           alert("second")
-          window.location = url
+          window.location.href = url
         } 
         alert("notamobile")
-          window.location = url  
+          window.location.href = url  
       }
     }
   }
