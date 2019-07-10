@@ -57,10 +57,10 @@ export default {
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           alert("first")
-          window.location.href = url
+          window.location = url
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
           alert("second")
-          window.location.href = url
+          window.location = url
         } 
         alert("notamobile")
           window.location.href = url  
