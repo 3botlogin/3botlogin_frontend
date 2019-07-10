@@ -80,8 +80,8 @@ export default new Vuex.Store({
   },
   actions: {
     setDoubleName (context, doubleName) {
-      var extention = '.3bot'
-      if (doubleName.indexOf(extention) >= 0) {
+      var extension = '.3bot'
+      if (doubleName.indexOf(extension) >= 0) {
         context.commit('setDoubleName', doubleName)
       } else {
         context.commit('setDoubleName', `${doubleName}.3bot`)
@@ -262,6 +262,9 @@ export default new Vuex.Store({
     },
     setAppPublicKey (context, appPublicKey) {
       context.commit('setAppPublicKey', appPublicKey)
+    },
+    setHash (context, hash) {
+      context.commit('setHash', hash)
     }
   },
   getters: {
