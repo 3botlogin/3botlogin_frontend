@@ -34,6 +34,7 @@ export default {
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
         if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
+        console.log(url)
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           window.location.replace(url)
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {

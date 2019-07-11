@@ -1,9 +1,5 @@
 import VueQr from 'vue-qr'
-
-import {
-  mapActions,
-  mapGetters
-} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'register',
@@ -106,17 +102,15 @@ export default {
     },
     openApp () {
       if (this.isMobile) {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
-          if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
-          if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
-          if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
-          console.log(url)
-          if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            window.location.replace(url)
-          } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            window.open(url)
-          }
+        var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
+        if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
+        if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
+        if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
+        console.log(url)
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          window.location.replace(url)
+        } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          window.open(url)
         }
       }
     }
