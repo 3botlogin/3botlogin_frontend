@@ -20,6 +20,10 @@ export default new Router({
     name: 'login',
     component: () => import(/* webpackChunkName: "login-page" */ './views/Login')
   }, {
+    path: '/embeddedlogin',
+    name: 'embeddedlogin',
+    component: () => import(/* webpackChunkName: "login-page" */ './views/EmbeddedLogin')
+  }, {
     path: '/verifyemail',
     name: 'verifyemail',
     component: () => import(/* webpackChunkName: "verifyemail-page" */ './views/VerifyEmail')
