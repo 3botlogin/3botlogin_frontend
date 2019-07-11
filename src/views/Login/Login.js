@@ -45,6 +45,7 @@ export default {
   watch: {
     signed (val) {
       if (val) {
+        window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
         var union = '&'

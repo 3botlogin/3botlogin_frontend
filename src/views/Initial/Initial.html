@@ -9,7 +9,7 @@
             Identify yourself
           </h1>
         </v-toolbar>
-        <v-form v-model="valid" @submit.prevent="registerOrLogim">
+        <v-form v-model="valid" @submit.prevent="registerOrLogin">
           <v-card-text>
               <v-stepper v-if="firstvisit" class="elevation-0" flat>
                   <v-stepper-header class="elevation-0">
@@ -55,7 +55,7 @@
             Identify yourself
           </h1>
         </v-toolbar>
-        <v-form v-model="valid" @submit.prevent="registerOrLogim">
+        <v-form v-model="valid" @submit.prevent="registerOrLogin">
           <v-card-text>
               <v-layout justify-center>
             <v-progress-circular :size="100" :width="15" color="accent" indeterminate></v-progress-circular>
