@@ -23,7 +23,9 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route)
+    var tempName = localStorage.getItem("username")
+    if(tempName) this.doubleName = tempName.split('.')[0]
+
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
