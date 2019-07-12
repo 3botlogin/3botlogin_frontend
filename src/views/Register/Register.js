@@ -102,7 +102,7 @@ export default {
     },
     openApp () {
       if (this.isMobile) {
-        var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
+        var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&phrase=${encodeURIComponent(this.keys.phrase)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
         if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
