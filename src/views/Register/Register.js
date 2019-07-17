@@ -100,8 +100,8 @@ export default {
       this.youWereNeverAloneDialog = false
       this.step = 3
     },
-    openApp () { 
-      if(this.isMobile) {
+    openApp () {
+      if (this.isMobile) {
         var url = `threebot://register/?privateKey=${encodeURIComponent(this.keys.privateKey)}&state=${encodeURIComponent(this.hash)}&mobile=true&doubleName=${encodeURIComponent(this.doubleName)}&email=${encodeURIComponent(this.email)}`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
         if (this.appId) url += `&appId=${encodeURIComponent(this.appId)}`
@@ -134,6 +134,7 @@ export default {
       this.scannedFlag = true
     },
     signed (val) {
+      console.log('its signed register', val)
       if (val) {
         this.step = 4
         if (!this.mailsent) {

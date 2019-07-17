@@ -6,7 +6,8 @@ export default {
   props: [],
   data () {
     return {
-      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+      didLeavePage: false
     }
   },
   computed: {
@@ -26,7 +27,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'resendNotification'
+      'resendNotification',
+      'forceRefetchStatus'
     ]),
     openApp () {
       if (this.isMobile) {
@@ -36,10 +38,23 @@ export default {
         if (this.appPublicKey) url += `&appPublicKey=${encodeURIComponent(this.appPublicKey)}`
         console.log(url)
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          window.location = url
+          window.location.replace(url)
         } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          window.location = url
-        }  
+          window.open(url)
+        }
+      }
+    },
+    lostFocus () {
+      console.log(`Lost focus, set flag`)
+      this.didLeavePage = true
+    },
+    gotFocus () {
+      console.log(`--- Got focus again, flag is ${this.didLeavePage}`)
+      if (this.didLeavePage) {
+        if (!this.rechecked) {
+          this.forceRefetchStatus()
+        }
+        this.rechecked = true
       }
     }
   },
@@ -48,22 +63,12 @@ export default {
       if (val) {
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
-        var union = '&'
+        var union = '?'
         if (this.redirectUrl.indexOf('?') >= 0) {
           union = '&'
-        } else {
-          union = '?'
         }
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          alert("first")
-          window.location = url
-        } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          alert("second")
-          window.location = url
-        } 
-        alert("notamobile")
-          window.location.href = url  
+        window.location.href = url
       }
     }
   }
