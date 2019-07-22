@@ -6,7 +6,8 @@ export default {
   props: [],
   data () {
     return {
-      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+      cancelLogin: false
     }
   },
   computed: {
@@ -16,14 +17,14 @@ export default {
       'doubleName',
       'firstTime',
       'randomImageId',
+      'cancelLoginUp',
       'hash',
       'scope',
       'appId',
       'appPublicKey'
     ])
   },
-  mounted () {
-  },
+  mounted () {},
   methods: {
     ...mapActions([
       'resendNotification'
@@ -58,6 +59,12 @@ export default {
         var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         window.location.href = url
       }
+    },
+    cancelLoginUp (val) {
+      console.log(val)
+      this.cancelLogin = true
+      var url = `${this.redirectUrl}?error=CancelledByUser`
+      window.location.href = url
     }
   }
 }
