@@ -1,13 +1,14 @@
 import { mapGetters, mapActions } from 'vuex'
-import config from '../../../public/config'
+// import config from '../../../public/config'
 
 export default {
   name: 'login',
   components: {},
   props: [],
-  data () {
+  data() {
     return {
-      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+      cancelLogin: false
     }
   },
   computed: {
@@ -17,19 +18,20 @@ export default {
       'doubleName',
       'firstTime',
       'randomImageId',
+      'cancelLoginUp',
       'hash',
       'scope',
       'appId',
       'appPublicKey'
     ])
   },
-  mounted () {
+  mounted() {
   },
   methods: {
     ...mapActions([
       'resendNotification'
     ]),
-    openApp () {
+    openApp() {
       if (this.isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -45,7 +47,7 @@ export default {
     }
   },
   watch: {
-    signed (val) {
+    signed(val) {
       if (val) {
         window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
@@ -57,7 +59,7 @@ export default {
           union = '?'
         }
         console.log(this.appId, this.redirectUrl)
-        var url = `${config.redirectProtocol}://${this.appId}${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+        var url = `//${this.appId}${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         console.log(url)
         window.location.href = url
       }

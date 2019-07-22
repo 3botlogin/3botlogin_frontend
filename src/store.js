@@ -26,6 +26,7 @@ export default new Vuex.Store({
       valid: false
     },
     scannedFlagUp: false,
+    cancelLoginUp: false,
     signed: null,
     firstTime: null,
     isMobile: false,
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     },
     setScannedFlagUp (state, scannedFlagUp) {
       state.scannedFlagUp = scannedFlagUp
+    },
+    setCancelLoginUp (state, cancelLoginUp) {
+      state.cancelLoginUp = cancelLoginUp
     },
     setSigned (state, signed) {
       state.signed = signed
@@ -86,6 +90,9 @@ export default new Vuex.Store({
       } else {
         context.commit('setDoubleName', `${doubleName}.3bot`)
       }
+    },
+    setAttemptCanceled (context, payload) {
+      context.commit('setCancelLoginUp', payload)
     },
     SOCKET_connect (context, payload) {
       console.log(`hi`)
@@ -138,6 +145,10 @@ export default new Vuex.Store({
     },
     SOCKET_scannedFlag (context) {
       context.commit('setScannedFlagUp', true)
+    },
+    SOCKET_cancelLogin (context) {
+      console.log('f')
+      context.commit('setCancelLoginUp', true)
     },
     SOCKET_signed (context, data) {
       if (data.selectedImageId && !context.getters.firstTime && !context.getters.isMobile && data.selectedImageId !== context.getters.randomImageId) {
@@ -274,6 +285,7 @@ export default new Vuex.Store({
     hash: state => state.hash,
     redirectUrl: state => state.redirectUrl,
     scannedFlagUp: state => state.scannedFlagUp,
+    cancelLoginUp: state => state.cancelLoginUp,
     signed: state => state.signed,
     firstTime: state => state.firstTime,
     emailVerificationStatus: state => state.emailVerificationStatus,

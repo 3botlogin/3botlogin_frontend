@@ -23,9 +23,8 @@ export default {
     }
   },
   mounted () {
-    var tempName = localStorage.getItem("username")
-    if(tempName) this.doubleName = tempName.split('.')[0]
-
+    console.log(this.$route)
+    this.setAttemptCanceled(false)
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
@@ -72,7 +71,8 @@ export default {
       'setAppId',
       'setAppPublicKey',
       'checkName',
-      'clearCheckStatus'
+      'clearCheckStatus',
+      'setAttemptCanceled'
     ]),
     registerOrLogin () {
       this.setDoubleName(this.doubleName)
