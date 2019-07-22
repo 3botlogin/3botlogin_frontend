@@ -63,6 +63,11 @@ export default {
         console.log(url)
         window.location.href = url
       }
+    }, cancelLoginUp (val) {
+      console.log(val)
+      this.cancelLogin = true
+      var url = `//${this.appId}${this.redirectUrl}?error=CancelledByUser`
+      window.location.href = url
     }
   }
 }
