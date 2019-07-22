@@ -58,7 +58,7 @@
                 </div>
                 <div class="text-xs-center">
                   <div v-if="!isMobile">
-                  <p>Scan this QR with the 3Bot app.</p>
+                  <p class="secret">Scan this QR with the 3Bot app. <br><span style="color:red;font-weight:bold">Keep it secret.</span></p>
                   <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   </div>
                   <div v-if="isMobile">

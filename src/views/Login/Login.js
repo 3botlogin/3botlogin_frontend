@@ -1,4 +1,5 @@
 import { mapGetters, mapActions } from 'vuex'
+import config from '../../../public/config'
 
 export default {
   name: 'login',
@@ -55,7 +56,9 @@ export default {
         } else {
           union = '?'
         }
-        var url = `${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+        console.log(this.appId, this.redirectUrl)
+        var url = `${config.redirectProtocol}://${this.appId}${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+        console.log(url)
         window.location.href = url
       }
     }

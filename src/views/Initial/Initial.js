@@ -41,6 +41,7 @@ export default {
     }
     this.appid = this.$route.query.appid
     if (this.$route.query) {
+      console.log(this.$route.query.redirecturl)
       this.$store.dispatch('saveState', {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
