@@ -9,6 +9,7 @@ export default {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       cancelLogin: false
+      didLeavePage: false
     }
   },
   computed: {
@@ -29,7 +30,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'resendNotification'
+      'resendNotification',
+      'forceRefetchStatus'
     ]),
     openApp() {
       if (this.isMobile) {
@@ -44,6 +46,19 @@ export default {
           window.open(url)
         }
       }
+    },
+    lostFocus () {
+      console.log(`Lost focus, set flag`)
+      this.didLeavePage = true
+    },
+    gotFocus () {
+      console.log(`--- Got focus again, flag is ${this.didLeavePage}`)
+      if (this.didLeavePage) {
+        if (!this.rechecked) {
+          this.forceRefetchStatus()
+        }
+        this.rechecked = true
+      }
     }
   },
   watch: {
@@ -52,11 +67,9 @@ export default {
         window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
-        var union = '&'
+        var union = '?'
         if (this.redirectUrl.indexOf('?') >= 0) {
           union = '&'
-        } else {
-          union = '?'
         }
         console.log(this.appId, this.redirectUrl)
         var url = `//${this.appId}${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`

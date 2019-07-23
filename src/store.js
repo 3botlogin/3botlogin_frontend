@@ -95,7 +95,8 @@ export default new Vuex.Store({
       context.commit('setCancelLoginUp', payload)
     },
     SOCKET_connect (context, payload) {
-      console.log(`hi`)
+      context.dispatch('forceRefetchStatus')
+      console.log(`hi, connected with SOCKET_connect`)
     },
     saveState (context, payload) {
       context.commit('setHash', payload.hash)
@@ -186,12 +187,15 @@ export default new Vuex.Store({
       })
     },
     forceRefetchStatus (context) {
-      axios.get(`${config.apiurl}api/forcerefetch?hash=${context.getters.hash}&doublename=${context.getters.doubleName}`).then(response => {
-        if (response.data.scanned) context.commit('setScannedFlagUp', response.data.scanned)
-        if (response.data.signed) context.commit('setSigned', response.data.signed)
-      }).catch(e => {
-        alert(e)
-      })
+      if (context.getters.hash && context.getters.doubleName) {
+        console.log(`Forcerefetching for ${context.getters.doubleName}`)
+        axios.get(`${config.apiurl}api/forcerefetch?hash=${context.getters.hash}&doublename=${context.getters.doubleName}`).then(response => {
+          if (response.data.scanned) context.commit('setScannedFlagUp', response.data.scanned)
+          if (response.data.signed) context.commit('setSigned', response.data.signed)
+        }).catch(e => {
+          alert(e)
+        })
+      }
     },
     sendValidationEmail (context, data) {
       var callbackUrl = `${window.location.protocol}//${window.location.host}/verifyemail`
