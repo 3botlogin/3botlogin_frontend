@@ -72,7 +72,16 @@ export default {
           union = '&'
         }
         console.log(this.appId, this.redirectUrl)
-        var url = `//${this.appId}${this.redirectUrl}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+
+        var safeRedirectUri;
+        if (this.redirectUrl[0] === "/"){
+          safeRedirectUri = this.redirectUrl
+        } else {
+          safeRedirectUri = '/'+this.redirectUrl
+        }
+
+
+        var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         console.log(url)
         window.location.href = url
       }
@@ -80,7 +89,15 @@ export default {
 cancelLoginUp (val) {
       console.log(val)
       this.cancelLogin = true
-      var url = `//${this.appId}${this.redirectUrl}?error=CancelledByUser`
+
+      var safeRedirectUri;
+      if (this.redirectUrl[0] === "/"){
+        safeRedirectUri = this.redirectUrl
+      } else {
+        safeRedirectUri = '/'+this.redirectUrl
+      }
+      
+      var url = `//${this.appId}${safeRedirectUri}?error=CancelledByUser`
       window.location.href = url
     }
   }
