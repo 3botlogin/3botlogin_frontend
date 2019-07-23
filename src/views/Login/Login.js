@@ -5,10 +5,10 @@ export default {
   name: 'login',
   components: {},
   props: [],
-  data() {
+  data () {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-      cancelLogin: false
+      cancelLogin: false,
       didLeavePage: false
     }
   },
@@ -26,14 +26,14 @@ export default {
       'appPublicKey'
     ])
   },
-  mounted() {
+  mounted () {
   },
   methods: {
     ...mapActions([
       'resendNotification',
       'forceRefetchStatus'
     ]),
-    openApp() {
+    openApp () {
       if (this.isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -62,7 +62,7 @@ export default {
     }
   },
   watch: {
-    signed(val) {
+    signed (val) {
       if (val) {
         window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
@@ -76,7 +76,8 @@ export default {
         console.log(url)
         window.location.href = url
       }
-    }, cancelLoginUp (val) {
+    },
+cancelLoginUp (val) {
       console.log(val)
       this.cancelLogin = true
       var url = `//${this.appId}${this.redirectUrl}?error=CancelledByUser`

@@ -54,13 +54,15 @@
             <v-stepper-content step="3">
               <v-layout justify-center>
                 <div class="text-xs-center" v-if="scannedFlag">
-                  <v-progress-circular :size="100" :width="15" color="accent" class="mb-4" indeterminate></v-progress-circular>
+                  <v-progress-circular :size="100" :width="15" color="accent" class="mb-4" indeterminate>
+                  </v-progress-circular>
                   <p>Follow the instructions on your phone.</p>
                 </div>
-                <div class="text-xs-center">
+                <div class="text-xs-center" v-else>
                   <div v-if="!isMobile">
-                  <p class="secret">Scan this QR with the 3Bot app. <br><span style="color:red;font-weight:bold">Keep it secret.</span></p>
-                  <vue-qr :text="qrText" @click="openApp"></vue-qr>
+                    <p class="secret">Scan this QR with the 3Bot app. <br><span style="color:red;font-weight:bold">Keep
+                        it secret.</span></p>
+                    <vue-qr :text="qrText" @click="openApp"></vue-qr>
                   </div>
                   <div v-if="isMobile">
                     <p>Press the button!</p>
@@ -69,11 +71,13 @@
                     </v-btn>
                   </div>
                   <p>Download this app on the Google Play/Apple App Store.</p>
-                  <a class="mx-2" href="https://play.google.com/store/apps/details?id=org.jimber.threebotlogin" target="_blank">
-                    <img src="googleplay.png" height="50"/>
+                  <a class="mx-2" href="https://play.google.com/store/apps/details?id=org.jimber.threebotlogin"
+                    target="_blank">
+                    <img src="googleplay.png" height="50" />
                   </a>
-                  <a class="mx-2" href="https://itunes.apple.com/be/app/3bot-login/id1459845885?l=nl&mt=8" target="_blank">
-                    <img src="applestore.png" height="50"/>
+                  <a class="mx-2" href="https://itunes.apple.com/be/app/3bot-login/id1459845885?l=nl&mt=8"
+                    target="_blank">
+                    <img src="applestore.png" height="50" />
                   </a>
                 </div>
               </v-layout>
