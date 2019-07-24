@@ -134,6 +134,7 @@ export default {
       this.scannedFlag = true
     },
     signed (val) {
+      console.log('its signed register', val)
       if (val) {
         this.step = 4
         if (!this.mailsent) {
