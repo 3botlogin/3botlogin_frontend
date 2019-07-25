@@ -71,9 +71,10 @@ export default {
         if (this.redirectUrl.indexOf('?') >= 0) {
           union = '&'
         }
-        console.log(this.appId, this.redirectUrl)
 
         var safeRedirectUri
+        // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
+        // Now its wallet.com/.evil.com
         if (this.redirectUrl[0] === '/') {
           safeRedirectUri = this.redirectUrl
         } else {
@@ -81,7 +82,6 @@ export default {
         }
 
         var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        console.log(url)
         window.location.href = url
       }
     },
