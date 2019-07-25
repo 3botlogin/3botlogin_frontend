@@ -5,7 +5,7 @@ export default {
   name: 'login',
   components: {},
   props: [],
-  data() {
+  data () {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       cancelLogin: false,
@@ -26,14 +26,14 @@ export default {
       'appPublicKey'
     ])
   },
-  mounted() {
+  mounted () {
   },
   methods: {
     ...mapActions([
       'resendNotification',
       'forceRefetchStatus'
     ]),
-    openApp() {
+    openApp () {
       if (this.isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -47,11 +47,11 @@ export default {
         }
       }
     },
-    lostFocus() {
+    lostFocus () {
       console.log(`Lost focus, set flag`)
       this.didLeavePage = true
     },
-    gotFocus() {
+    gotFocus () {
       console.log(`--- Got focus again, flag is ${this.didLeavePage}`)
       if (this.didLeavePage) {
         if (!this.rechecked) {
@@ -62,7 +62,7 @@ export default {
     }
   },
   watch: {
-    signed(val) {
+    signed (val) {
       if (val) {
         window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
@@ -72,10 +72,10 @@ export default {
           union = '&'
         }
 
-        var safeRedirectUri;
+        var safeRedirectUri
         // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
         // Now its wallet.com/.evil.com
-        if (this.redirectUrl[0] === "/") {
+        if (this.redirectUrl[0] === '/') {
           safeRedirectUri = this.redirectUrl
         } else {
           safeRedirectUri = '/' + this.redirectUrl
@@ -85,12 +85,12 @@ export default {
         window.location.href = url
       }
     },
-    cancelLoginUp(val) {
+    cancelLoginUp (val) {
       console.log(val)
       this.cancelLogin = true
 
-      var safeRedirectUri;
-      if (this.redirectUrl[0] === "/") {
+      var safeRedirectUri
+      if (this.redirectUrl[0] === '/') {
         safeRedirectUri = this.redirectUrl
       } else {
         safeRedirectUri = '/' + this.redirectUrl

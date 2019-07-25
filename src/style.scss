@@ -21,6 +21,11 @@
         filter: blur(5px);
     }
 }
+.qr {
+    img {
+        width: 200px;
+    }
+}
 
 // Vuetify extension
 .v-card {
