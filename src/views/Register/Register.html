@@ -59,16 +59,16 @@
                   <p>Follow the instructions on your phone.</p>
                 </div>
                 <div class="text-xs-center" v-else>
-                  <div v-if="!isMobile">
-                    <p class="secret">Scan this QR with the 3Bot app. <br><span style="color:red;font-weight:bold">Keep
-                        it secret.</span></p>
-                    <vue-qr :text="qrText" @click="openApp"></vue-qr>
-                  </div>
                   <div v-if="isMobile">
                     <p>Press the button!</p>
                     <v-btn class="accent" @click="openApp">
                       Open 3Bot app
                     </v-btn>
+                  </div>
+                  <div v-if="!isMobile">
+                    <vue-qr :size="400" :text="qrText" @click="openApp" class="qr"></vue-qr>
+                    <p class="secret" style="color:red;font-weight:bold">Keep it secret.</p>
+                    <p class="secret">Scan this QR with the 3Bot app.</p>
                   </div>
                   <p>Download this app on the Google Play/Apple App Store.</p>
                   <a class="mx-2" href="https://play.google.com/store/apps/details?id=org.jimber.threebotlogin"
