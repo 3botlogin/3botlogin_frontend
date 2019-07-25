@@ -36,10 +36,22 @@
               <p class="title">This will be your (little) secret</p>
               <p class="subheading">
                 Please write this on a piece of paper and keep it in a secure place. <br>
-                If you ever lose access to your account, you will need this phrase to recover. <br>
+                If you ever lose access to your account, you will need this
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                      <span v-on="on">phrase</span>
+                    </template>
+                    <span>BIP39 Mnemonic</span>
+                  </v-tooltip>
+                  and your doublename to recover. <br>
                 This is the only time you'll see this.
+
               </p>
-              <v-textarea :class="!alone ?  'notAlone' : ''" readonly v-model="keys.phrase" box label="Key">
+              <v-text-field readonly v-model="doubleName" box label="Doublename">
+              </v-text-field>
+              <!-- <v-text-field readonly v-model="email" box label="email">
+              </v-text-field> -->
+              <v-textarea :class="!alone ?  'notAlone' : ''" readonly v-model="keys.phrase" box label="Phrase">
               </v-textarea>
               <v-switch v-model="alone" label="I'm alone, show me my phrase." class="mt-0 ml-2"></v-switch>
 
