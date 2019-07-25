@@ -13,9 +13,13 @@
               <v-progress-circular :size="100" :width="15" color="accent" indeterminate>
                 <img :src='`/icons/${randomImageId}.png`' height="37" v-if="!isMobile">
               </v-progress-circular>
-              <p class="subheading pt-3" v-if="$route.params.again && !isMobile">Please enter your pincode and select this icon on your mobile phone once again.</p>
-              <p class="subheading pt-3" v-if="$route.params.again && isMobile">Please enter your pincode on your mobile phone once again.</p>
-              <p class="subheading pt-3" v-if="!$route.params.again">Please enter your pincode and select this icon on your mobile phone.</p>
+              <p class="subheading pt-3" v-if="!$route.params.again && !isMobile">Please select this icon on your mobile phone and enter your pincode</p>
+              <p class="subheading pt-3" v-if="!$route.params.again && isMobile">Please enter your pincode</p>
+              <p class="subheading pt-3" v-if="$route.params.again && isMobile">Please enter your pincode again</p>
+              <p class="subheading pt-3" v-if="$route.params.again && !isMobile">Please select the icon on your mobile phone and enter your pincode again.</p>
+              <!-- <p class="subheading pt-3" v-if="$route.params.again && !isMobile">Please enter your pincode and select
+                this icon on your mobile phone once again.</p> -->
+
               <v-layout column>
                 <v-btn class="accent" @click="resendNotification" v-if="!firstTime && !isMobile">
                   <v-icon left>
