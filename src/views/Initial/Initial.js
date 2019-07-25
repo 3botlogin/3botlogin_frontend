@@ -14,7 +14,8 @@ export default {
       nameRegex: new RegExp(/^(\w+)$/),
       nameRules: [
         v => !!v || 'Name is required',
-        v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
+        v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.',
+        v => v.length <= 50 || 'Name must be less than 50 characters.'
       ],
       continueToLogin: false,
       url: '',

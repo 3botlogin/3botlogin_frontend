@@ -22,7 +22,7 @@
               <v-form v-model="valid" @submit.prevent='valid ? step = 2 : null'>
                 <p class="title">Tell me more about yourself</p>
                 <v-text-field box label="Double name" disabled v-model="doubleName" />
-                <v-text-field autofocus box label="Email" type="email" v-model="email" required :rules="emailRules" />
+                <v-text-field autofocus box label="Email" type="email" v-model="email" required :rules="emailRules" counter=80 />
                 <v-text-field placeholder="NOT IMPLEMENTED YET" disabled box label="Location" />
                 <v-layout>
                   <v-spacer />

@@ -20,7 +20,8 @@ export default {
       emailRegex: new RegExp(/.+@.+\..+/),
       emailRules: [
         v => !!v || 'Email is required',
-        v => this.emailRegex.test(v) || 'Email doesn\'t seems valid'
+        v => this.emailRegex.test(v) || 'Email doesn\'t seems valid',
+        v => v.length <= 80 || 'Email must be less than 80 characters'
       ],
       didLeavePage: false,
       rechecked: false,
