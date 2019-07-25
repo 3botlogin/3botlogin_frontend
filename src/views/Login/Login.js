@@ -73,30 +73,29 @@ export default {
         }
         console.log(this.appId, this.redirectUrl)
 
-        var safeRedirectUri;
-        if (this.redirectUrl[0] === "/"){
+        var safeRedirectUri
+        if (this.redirectUrl[0] === '/') {
           safeRedirectUri = this.redirectUrl
         } else {
-          safeRedirectUri = '/'+this.redirectUrl
+          safeRedirectUri = '/' + this.redirectUrl
         }
-
 
         var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
         console.log(url)
         window.location.href = url
       }
     },
-cancelLoginUp (val) {
+    cancelLoginUp (val) {
       console.log(val)
       this.cancelLogin = true
 
-      var safeRedirectUri;
-      if (this.redirectUrl[0] === "/"){
+      var safeRedirectUri
+      if (this.redirectUrl[0] === '/') {
         safeRedirectUri = this.redirectUrl
       } else {
-        safeRedirectUri = '/'+this.redirectUrl
+        safeRedirectUri = '/' + this.redirectUrl
       }
-      
+
       var url = `//${this.appId}${safeRedirectUri}?error=CancelledByUser`
       window.location.href = url
     }
