@@ -14,7 +14,8 @@ export default {
       nameRegex: new RegExp(/^(\w+)$/),
       nameRules: [
         v => !!v || 'Name is required',
-        v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.'
+        v => this.nameRegex.test(v) || 'Name can only contain alphanumeric characters.',
+        v => v.length <= 50 || 'Name must be less than 50 characters.'
       ],
       continueToLogin: false,
       url: '',
@@ -24,6 +25,10 @@ export default {
   },
   mounted () {
     console.log(this.$route)
+    this.setAttemptCanceled(false)
+    var tempName = localStorage.getItem("username")
+    if(tempName) this.doubleName = tempName.split('.')[0]
+
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
@@ -39,6 +44,7 @@ export default {
     }
     this.appid = this.$route.query.appid
     if (this.$route.query) {
+      console.log(this.$route.query.redirecturl)
       this.$store.dispatch('saveState', {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
@@ -69,7 +75,8 @@ export default {
       'setAppId',
       'setAppPublicKey',
       'checkName',
-      'clearCheckStatus'
+      'clearCheckStatus',
+      'setAttemptCanceled'
     ]),
     registerOrLogin () {
       this.setDoubleName(this.doubleName)

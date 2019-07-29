@@ -19,7 +19,11 @@
             </v-layout>
             <v-layout column align-center v-if="emailVerificationStatus.checked && !emailVerificationStatus.valid">
               <v-icon :size="100" color="error">close</v-icon>
-              <p class="subheading pt-3">There was a problem validating your email.</p>
+              <p align-center class="subheading pt-3 text-xs-center">There was a problem validating your email, <br>
+                please contact support if this problem persists.<br>
+              
+                <a href="https://support.grid.tf/">https://support.grid.tf/</a>
+              </p>
             </v-layout>
           </v-card-text>
         </v-form>
