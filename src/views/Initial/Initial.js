@@ -27,7 +27,12 @@ export default {
     console.log(this.$route)
     this.setAttemptCanceled(false)
     var tempName = localStorage.getItem("username")
-    if(tempName) this.doubleName = tempName.split('.')[0]
+    if(tempName){
+
+      this.doubleName = tempName.split('.')[0];
+      this.checkNameAvailability()
+      
+    }
 
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
@@ -52,6 +57,7 @@ export default {
       this.setScope(this.$route.query.scope || null)
       this.setAppId(this.$route.query.appid || null)
       this.setAppPublicKey(this.$route.query.publickey || null)
+      
     } else {
       this.$router.push('error')
     }
