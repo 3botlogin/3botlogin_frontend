@@ -47,7 +47,6 @@ export default {
     qrText () {
       return JSON.stringify({
         hash: this.hash,
-        privateKey: this.keys.privateKey,
         doubleName: this.doubleName,
         email: this.email,
         scope: this.scope,

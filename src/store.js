@@ -230,29 +230,41 @@ export default new Vuex.Store({
         axios.post(`${config.openkycurl}users/${data.userId}/verify`, {
           verification_code: data.verificationCode
         }).then(message => {
-          axios.get(`${config.openkycurl}keys`).then(async keys => {
-            console.log(`Validating signature`)
-            cryptoService.validateSignature(message.data.email, message.data.signature, keys.data.public).then(() => {
+          axios.post(`${config.openkycurl}verify`, {
+            signedEmailIdentifier: message.data
+          }).then(response => {
+            if (response.data.identifier === data.userId) {
               axios.post(`${config.apiurl}api/users/${data.userId}/emailverified`)
               context.commit('setEmailVerificationStatus', {
                 checked: true,
                 checking: false,
                 valid: true
               })
-            }).catch(e => {
-              context.commit('setEmailVerificationStatus', {
-                checked: true,
-                checking: false,
-                valid: false
-              })
-            })
-          }).catch(e => {
-            context.commit('setEmailVerificationStatus', {
-              checked: true,
-              checking: false,
-              valid: false
-            })
+            }
           })
+          // axios.get(`${config.openkycurl}publickey`).then(async publickey => {
+          //   // console.log(`Validating signature`)
+          //   // cryptoService.validateSignature(message.data, message.data, publickey.data.public_key).then(() => {
+          //   //   axios.post(`${config.apiurl}api/users/${data.userId}/emailverified`)
+          //   //   context.commit('setEmailVerificationStatus', {
+          //   //     checked: true,
+          //   //     checking: false,
+          //   //     valid: true
+          //   //   })
+          //   // }).catch(e => {
+          //   //   context.commit('setEmailVerificationStatus', {
+          //   //     checked: true,
+          //   //     checking: false,
+          //   //     valid: false
+          //   //   })
+          //   // })
+          // }).catch(e => {
+          //   context.commit('setEmailVerificationStatus', {
+          //     checked: true,
+          //     checking: false,
+          //     valid: false
+          //   })
+          // })
         }).catch(e => {
           context.commit('setEmailVerificationStatus', {
             checked: true,
