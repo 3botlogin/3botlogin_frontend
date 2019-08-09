@@ -1,4 +1,7 @@
-import { mapActions, mapGetters } from 'vuex'
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
 var cookies = require('vue-cookies')
 
 export default {
@@ -27,13 +30,19 @@ export default {
     console.log(this.$route)
     this.setAttemptCanceled(false)
     var tempName = localStorage.getItem('username')
-    if (tempName) this.doubleName = tempName.split('.')[0]
-
+    if (tempName) {
+      this.doubleName = tempName.split('.')[0]
+      this.checkNameAvailability()
+    }
     if (this.$route.query.logintoken && this.$route.query.doublename) {
       this.doubleName = this.$route.query.doublename
       this.setDoubleName(this.$route.query.doublename)
       this.url = `${this.$route.query.doublename} && ${this.$route.query.logintoken}`
-      this.loginUser({ mobile: true, firstTime: false, logintoken: this.$route.query.logintoken })
+      this.loginUser({
+        mobile: true,
+        firstTime: false,
+        logintoken: this.$route.query.logintoken
+      })
     }
     if (this.$route.query.logintoken) {
       this.spinner = true
@@ -85,7 +94,10 @@ export default {
     },
     login () {
       var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-      this.loginUser({ mobile: isMobile, firstTime: false })
+      this.loginUser({
+        mobile: isMobile,
+        firstTime: false
+      })
       if (isMobile) {
         var url = `threebot://login/?state=${encodeURIComponent(this.hash)}&mobile=true`
         if (this.scope) url += `&scope=${encodeURIComponent(this.scope)}`
@@ -94,10 +106,14 @@ export default {
         if (this.$route.query.logintoken) url += `&logintoken=${encodeURIComponent(this.$route.query.logintoken)}`
         window.open(url)
       }
-      this.$router.push({ name: 'login' })
+      this.$router.push({
+        name: 'login'
+      })
     },
     register () {
-      this.$router.push({ name: 'register' })
+      this.$router.push({
+        name: 'register'
+      })
     },
     checkNameAvailability () {
       this.clearCheckStatus()
