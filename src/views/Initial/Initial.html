@@ -40,8 +40,8 @@
             <v-spacer></v-spacer>
             <p v-if="!nameCheckStatus.checking && valid" class="pr-1">{{nameCheckStatus.available ? "This account doesn't exist yet." :  "This account already exists "}}
             <v-tooltip bottom>
-                <a slot="activator" v-if="!nameCheckStatus.available && valid" class="pr-3" href="#"> · recover</a>
-              <span>Is this your account? Click to recover.</span>
+                <a slot="activator" v-if="!nameCheckStatus.available && valid" class="pr-3" @click="$router.push('recover')"> · recover</a>
+              <span>Is this your account? Click for more information on how to recover your account.</span>
             </v-tooltip>
           </p>
             <!-- <v-btn v-if="!nameCheckStatus.available" icon outline @click.stop="dialog = true">?</v-btn> -->

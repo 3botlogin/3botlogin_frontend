@@ -31,5 +31,9 @@ export default new Router({
     path: '/error',
     name: 'error',
     component: () => import(/* webpackChunkName: "error-page" */ './views/Errorpage')
+  }, {
+    path: '/recover',
+    name: 'recover',
+    component: () => import(/* webpackChunkName: "error-page" */ './views/Recover')
   }]
 })
