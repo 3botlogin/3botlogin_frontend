@@ -9,7 +9,8 @@ export default {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       cancelLogin: false,
-      didLeavePage: false
+      didLeavePage: false,
+      dialog: false
     }
   },
   computed: {

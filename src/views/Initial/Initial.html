@@ -38,8 +38,13 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <p v-if="!nameCheckStatus.checking && valid">{{nameCheckStatus.available ? "This account doesn't exist yet." :  "This account already exists."}}</p>
-            <v-btn type="submit" flat :disabled="!(nameCheckStatus.checked && !nameCheckStatus.checking && valid)">{{nameCheckStatus.available ? "Register" :  "Sign in"}}</v-btn>
+            <p v-if="!nameCheckStatus.checking && valid" class="pr-1">{{nameCheckStatus.available ? "This account doesn't exist yet." :  "This account already exists "}}</p>
+            <v-tooltip bottom>
+                <a slot="activator" v-if="!nameCheckStatus.available && valid" class="pr-3" href="#"> · recover</a>
+              <span>Is this your account? Click to recover.</span>
+            </v-tooltip>
+            <!-- <v-btn v-if="!nameCheckStatus.available" icon outline @click.stop="dialog = true">?</v-btn> -->
+            <v-btn type="submit" outline flat :disabled="!(nameCheckStatus.checked && !nameCheckStatus.checking && valid)">{{nameCheckStatus.available ? "Register" :  "Sign in"}}</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
