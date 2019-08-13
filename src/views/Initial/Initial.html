@@ -45,7 +45,7 @@
             </v-tooltip>
           </p>
             <!-- <v-btn v-if="!nameCheckStatus.available" icon outline @click.stop="dialog = true">?</v-btn> -->
-            <v-btn type="submit" outline flat :disabled="!(nameCheckStatus.checked && !nameCheckStatus.checking && valid)">{{nameCheckStatus.available ? "Register" :  "Sign in"}}</v-btn>
+            <v-btn type="submit" flat :disabled="!(nameCheckStatus.checked && !nameCheckStatus.checking && valid)">{{nameCheckStatus.available ? "Register" :  "Sign in"}}</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
