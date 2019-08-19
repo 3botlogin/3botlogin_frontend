@@ -11,8 +11,11 @@
           <v-form>
             <v-card-text>
               <v-layout column align-center relative>
-                <v-progress-circular :size="100" :width="15" color="accent" indeterminate>
-                  <img :src='`/icons/${randomImageId}.png`' height="37" v-if="!isMobile">
+                <v-progress-circular :size="100" :width="15" color="accent" indeterminate v-if="!loggedIn">
+                  <img :src='`/icons/${randomImageId}.png`' height="37" v-if="!isMobile && !loggedIn">
+                </v-progress-circular>
+                <v-progress-circular v-else :size="100" :width="0">
+                  <v-icon color="accent" :size="75" class="animated fadeIn">done</v-icon>
                 </v-progress-circular>
                 <p class="subheading pt-3" v-if="!$route.params.again && !isMobile">Please select this icon on your mobile phone and enter your pincode</p>
                 <p class="subheading pt-3" v-if="!$route.params.again && isMobile">Please enter your pincode</p>
