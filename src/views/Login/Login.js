@@ -10,7 +10,8 @@ export default {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       cancelLogin: false,
       didLeavePage: false,
-      dialog: false
+      dialog: false,
+      loggedIn: false,
     }
   },
   computed: {
@@ -83,6 +84,7 @@ export default {
         }
 
         var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+        this.loggedIn = true;
         window.location.href = url
       }
     },
