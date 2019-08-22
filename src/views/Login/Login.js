@@ -11,7 +11,7 @@ export default {
       cancelLogin: false,
       didLeavePage: false,
       dialog: false,
-      loggedIn: false,
+      loggedIn: false
     }
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
         }
 
         var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        this.loggedIn = true;
+        this.loggedIn = true
         window.location.href = url
       }
     },

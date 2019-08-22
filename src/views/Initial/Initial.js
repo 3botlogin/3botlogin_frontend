@@ -113,6 +113,13 @@ export default {
           this.checkName(this.doubleName)
         }, 500)
       }
+    },
+    hasAppid() {
+      return this.$route.query.appid != undefined
+    },
+    actionBtnDisabled() {
+      if (!this.nameCheckStatus.available && !this.hasAppid()) return false // login and appid = btn disabled
+      return true // !(this.nameCheckStatus.checked && !this.nameCheckStatus.checking && this.valid)
     }
   },
   watch: {
