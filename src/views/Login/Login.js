@@ -9,7 +9,9 @@ export default {
     return {
       isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       cancelLogin: false,
-      didLeavePage: false
+      didLeavePage: false,
+      rechecked: false,
+      isRedirecting: false
     }
   },
   computed: {
@@ -54,10 +56,11 @@ export default {
     gotFocus () {
       console.log(`--- Got focus again, flag is ${this.didLeavePage}`)
       if (this.didLeavePage) {
-        if (!this.rechecked) {
+        if (!this.rechecked && !this.isRedirecting) {
           this.forceRefetchStatus()
         }
         this.rechecked = true
+        this.isRedirecting = true
       }
     }
   },
@@ -67,22 +70,27 @@ export default {
         window.localStorage.setItem('username', this.doubleName)
         var signedHash = encodeURIComponent(val.signedHash)
         var data = encodeURIComponent(JSON.stringify(val.data))
-        var union = '?'
-        if (this.redirectUrl.indexOf('?') >= 0) {
-          union = '&'
-        }
+        if (data && signedHash) {
+          var union = '?'
+          if (this.redirectUrl.indexOf('?') >= 0) {
+            union = '&'
+          }
 
-        var safeRedirectUri
-        // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
-        // Now its wallet.com/.evil.com
-        if (this.redirectUrl[0] === '/') {
-          safeRedirectUri = this.redirectUrl
-        } else {
-          safeRedirectUri = '/' + this.redirectUrl
-        }
+          var safeRedirectUri
+          // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
+          // Now its wallet.com/.evil.com
+          if (this.redirectUrl[0] === '/') {
+            safeRedirectUri = this.redirectUrl
+          } else {
+            safeRedirectUri = '/' + this.redirectUrl
+          }
 
-        var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        window.location.href = url
+          var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+          if (!this.isRedirecting) {
+            this.isRedirecting = true
+            window.location.href = url
+          }
+        }
       }
     },
     cancelLoginUp (val) {
