@@ -43,7 +43,7 @@
             <v-spacer></v-spacer>
             <p v-if="!nameCheckStatus.checking && valid && actionBtnDisabled() || !doubleName" class="pr-1">
               {{nameCheckStatus.available ? "This account doesn't exist yet." :  "This account already exists "}}
-              <p v-else class="pr-1"> You've got to come from an app to sign in.
+              <p v-else class="pr-1"> This account already exists · You've got to come from an app to sign in.
                 <v-tooltip bottom>
                   <a slot="activator" v-if="!nameCheckStatus.available && valid && actionBtnDisabled()" class="pr-3"
                     @click="$router.push('recover')"> · recover</a>

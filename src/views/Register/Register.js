@@ -44,7 +44,7 @@ export default {
       'emailVerificationStatus',
       'phrase'
     ]),
-    qrText () {
+    qrText() {
       return JSON.stringify({
         hash: this.hash,
         privateKey: this.keys.privateKey,

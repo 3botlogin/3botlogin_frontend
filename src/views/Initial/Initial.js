@@ -54,7 +54,8 @@ export default {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
       })
-      this.setScope(this.$route.query.scope || null)
+      if (this.$route.query.scope == undefined) this.setScope(JSON.stringify({ doubleName : true, email : false, keys : false}))
+      else this.setScope(this.$route.query.scope || null)
       this.setAppId(this.$route.query.appid || null)
       this.setAppPublicKey(this.$route.query.publickey || null)
       
@@ -85,9 +86,11 @@ export default {
       'setAttemptCanceled'
     ]),
     registerOrLogin () {
-      this.setDoubleName(this.doubleName)
-      if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
-      else this.login()
+      if (this.actionBtnDisabled()) {
+        this.setDoubleName(this.doubleName)
+        if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
+        else this.login()
+      }
     },
     login () {
       var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)

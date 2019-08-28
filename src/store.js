@@ -135,14 +135,14 @@ export default new Vuex.Store({
     async generateKeys (context) {
       context.commit('setKeys', await cryptoService.generateKeys())
     },
-    registerUser (context, data) {
-      console.log(`Register user`)
+    registerUser(context, data) {
+      console.log(`Register user`);
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
         email: data.email,
         publicKey: context.getters.keys.publicKey
       })
-      context.dispatch('loginUser', { firstTime: true })
+      context.dispatch("loginUser", { firstTime: true });
     },
     SOCKET_scannedFlag (context) {
       context.commit('setScannedFlagUp', true)
@@ -204,9 +204,9 @@ export default new Vuex.Store({
       callbackUrl += `&redirecturl=${window.btoa(context.getters.redirectUrl)}`
       callbackUrl += `&doublename=${context.getters.doubleName}`
 
-      if (context.getters.scope) callbackUrl += `&scope=${context.getters.scope}`
+      if (context.getters.scope) callbackUrl += `&scope=${encodeURIComponent(context.getters.scope)}`
       if (context.getters.appPublicKey) callbackUrl += `&publickey=${context.getters.appPublicKey}`
-      if (context.getters.appId) callbackUrl += `&appid=${context.getters.appId}`
+      callbackUrl += (context.getters.appId) ? `&appid=${context.getters.appId}` : `&appid=${window.location.hostname}`
 
       axios.post(`${config.openkycurl}users`, {
         'user_id': context.getters.doubleName,
