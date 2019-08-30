@@ -136,15 +136,15 @@ export default new Vuex.Store({
       context.commit('setKeys', await cryptoService.generateKeys())
     },
     registerUser(context, data) {
-      console.log(`Register user`);
+      console.log(`Register user`)
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
         email: data.email,
         publicKey: context.getters.keys.publicKey
       })
-      context.dispatch("loginUser", { firstTime: true });
+      context.dispatch('loginUser', { firstTime: true })
     },
-    SOCKET_scannedFlag (context) {
+    SOCKET_scannedFlag (context, data) {
       context.commit('setScannedFlagUp', true)
     },
     SOCKET_cancelLogin (context) {

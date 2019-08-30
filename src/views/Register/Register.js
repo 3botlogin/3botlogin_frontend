@@ -57,6 +57,13 @@ export default {
     }
   },
   mounted () {
+      this.$store.subscribe((mutation) => {
+        switch (mutation.type) {
+          case 'setScannedFlagUp':
+            this.scannedFlag = true
+            break
+        }
+      })
     this.generateKeys()
     window.onblur = this.lostFocus
     window.onfocus = this.gotFocus
@@ -129,9 +136,6 @@ export default {
       } else if (val === 3) {
         this.openApp()
       }
-    },
-    scannedFlagUp () {
-      this.scannedFlag = true
     },
     signed (val) {
       console.log('its signed register', val)
