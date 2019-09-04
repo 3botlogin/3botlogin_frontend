@@ -97,7 +97,7 @@ export default {
             if (!this.isRedirecting) {
               this.isRedirecting = true
               console.log('Changing href: ', url)
-              // window.location.href = url
+              window.location.href = url
             }
           } else {
             console.log('Missing data or signedHash')
