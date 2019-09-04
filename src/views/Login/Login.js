@@ -73,7 +73,13 @@ export default {
 
           window.localStorage.setItem('username', this.doubleName)
           var signedHash = encodeURIComponent(val.signedHash)
-          var data = encodeURIComponent(JSON.stringify(val.data))
+          var data
+
+          if (typeof val.data === 'object' && val.data !== null) {
+            data = encodeURIComponent(JSON.stringify(val.data))
+          } else {
+            data = encodeURIComponent(val.data)
+          }
 
           console.log('signedHash: ', signedHash)
           console.log('data', data)
