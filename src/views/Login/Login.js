@@ -69,6 +69,7 @@ export default {
       try {
         if (val) {
           console.log('Val: ', JSON.stringify(val))
+          console.log(val)
 
           window.localStorage.setItem('username', this.doubleName)
           var signedHash = encodeURIComponent(val.signedHash)
