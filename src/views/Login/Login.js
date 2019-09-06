@@ -65,28 +65,55 @@ export default {
   },
   watch: {
     signed (val) {
-      if (val) {
-        window.localStorage.setItem('username', this.doubleName)
-        var signedHash = encodeURIComponent(val.signedHash)
-        var data = encodeURIComponent(JSON.stringify(val.data))
-        var union = '?'
-        if (this.redirectUrl.indexOf('?') >= 0) {
-          union = '&'
-        }
+      try {
+        if (val) {
+          console.log('Val: ', JSON.stringify(val))
+          console.log(val)
 
-        var safeRedirectUri
-        // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
-        // Now its wallet.com/.evil.com
-        if (this.redirectUrl[0] === '/') {
-          safeRedirectUri = this.redirectUrl
+          window.localStorage.setItem('username', this.doubleName)
+          var signedHash = encodeURIComponent(val.signedHash)
+          var data
+
+          if (typeof val.data === 'object' && val.data !== null) {
+            data = encodeURIComponent(JSON.stringify(val.data))
+          } else {
+            data = encodeURIComponent(val.data)
+          }
+
+          console.log('signedHash: ', signedHash)
+          console.log('data', data)
+
+          if (data && signedHash) {
+            var union = '?'
+            if (this.redirectUrl.indexOf('?') >= 0) {
+              union = '&'
+            }
+
+            var safeRedirectUri
+            // Otherwise evil app could do appid+redirecturl = wallet.com + .evil.com = wallet.com.evil.com
+            // Now its wallet.com/.evil.com
+            if (this.redirectUrl[0] === '/') {
+              safeRedirectUri = this.redirectUrl
+            } else {
+              safeRedirectUri = '/' + this.redirectUrl
+            }
+
+            var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
+            if (!this.isRedirecting) {
+              this.isRedirecting = true
+              console.log('Changing href: ', url)
+              window.location.href = url
+            }
+          } else {
+            console.log('Missing data or signedHash')
+          }
         } else {
-          safeRedirectUri = '/' + this.redirectUrl
+          console.log('Val was null')
         }
-
-        var url = `//${this.appId}${safeRedirectUri}${union}username=${this.doubleName}&signedhash=${signedHash}&data=${data}`
-        this.loggedIn = true
-        window.location.href = url
+      } catch (e) {
+        console.log('Something went wrong ... ', e)
       }
+
     },
     cancelLoginUp (val) {
       console.log(val)
