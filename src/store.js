@@ -135,7 +135,7 @@ export default new Vuex.Store({
     async generateKeys (context) {
       context.commit('setKeys', await cryptoService.generateKeys())
     },
-    registerUser(context, data) {
+    registerUser (context, data) {
       console.log(`Register user`)
       socketService.emit('register', {
         doubleName: context.getters.doubleName,
