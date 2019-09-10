@@ -113,7 +113,6 @@ export default {
       } catch (e) {
         console.log('Something went wrong ... ', e)
       }
-
     },
     cancelLoginUp (val) {
       console.log(val)
