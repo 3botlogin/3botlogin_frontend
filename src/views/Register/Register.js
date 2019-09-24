@@ -44,7 +44,7 @@ export default {
       'emailVerificationStatus',
       'phrase'
     ]),
-    qrText() {
+    qrText () {
       return JSON.stringify({
         hash: this.hash,
         doubleName: this.doubleName,
@@ -57,13 +57,13 @@ export default {
     }
   },
   mounted () {
-      this.$store.subscribe((mutation) => {
-        switch (mutation.type) {
-          case 'setScannedFlagUp':
-            this.scannedFlag = true
-            break
-        }
-      })
+    this.$store.subscribe((mutation) => {
+      switch (mutation.type) {
+        case 'setScannedFlagUp':
+          this.scannedFlag = true
+          break
+      }
+    })
     this.generateKeys()
     window.onblur = this.lostFocus
     window.onfocus = this.gotFocus
@@ -139,7 +139,7 @@ export default {
     },
     signed (val) {
       console.log('its signed register', val)
-      if (val) {
+      if (val && val.signedHash) {
         this.step = 4
         if (!this.mailsent) {
           this.sendValidationEmail({
