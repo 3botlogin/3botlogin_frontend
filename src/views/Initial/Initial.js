@@ -58,7 +58,7 @@ export default {
         hash: this.$route.query.state,
         redirectUrl: this.$route.query.redirecturl
       })
-      if (this.$route.query.scope == undefined) this.setScope(JSON.stringify({ doubleName : true, email : false, keys : false}))
+      if (this.$route.query.scope == undefined) this.setScope(JSON.stringify({ doubleName: true, email: false, keys: false }))
       else this.setScope(this.$route.query.scope || null)
       this.setAppId(this.$route.query.appid || null)
       this.setAppPublicKey(this.$route.query.publickey || null)
@@ -114,6 +114,7 @@ export default {
       })
     },
     register () {
+      // TODO if is mobile -> open app
       this.$router.push({
         name: 'register'
       })
@@ -127,10 +128,10 @@ export default {
         }, 500)
       }
     },
-    hasAppid() {
+    hasAppid () {
       return this.$route.query.appid != undefined
     },
-    actionBtnDisabled() {
+    actionBtnDisabled () {
       if (!this.nameCheckStatus.available && !this.hasAppid()) return false // login and appid = btn disabled
       return true // !(this.nameCheckStatus.checked && !this.nameCheckStatus.checking && this.valid)
     }
