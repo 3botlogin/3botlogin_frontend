@@ -14,6 +14,7 @@ export default {
       appid: '',
       doubleName: '',
       valid: false,
+      areYouSureDialog: false,
       nameRegex: new RegExp(/^(\w+)$/),
       nameRules: [
         v => !!v || 'Name is required',
@@ -89,11 +90,29 @@ export default {
       'setAttemptCanceled'
     ]),
     registerOrLogin () {
+      // @click="isMobile() ? areYouSureDialog = true : register()"
+      console.log('This button?')
+      // if (this.actionBtnDisabled()) {
+      //   this.setDoubleName(this.doubleName)
+      //   if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
+      //   else this.login()
+      // }
       if (this.actionBtnDisabled()) {
         this.setDoubleName(this.doubleName)
-        if (this.nameCheckStatus.checked && this.nameCheckStatus.available) this.register()
-        else this.login()
+
+        if (this.nameCheckStatus.checked && this.nameCheckStatus.available) {
+          if (this.isMobile()) {
+            this.areYouSureDialog = true
+          } else {
+            this.register()
+          }
+        } else {
+          this.login()
+        }
       }
+    },
+    isMobile () {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     },
     login () {
       var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -113,8 +132,21 @@ export default {
         name: 'login'
       })
     },
+    openAppToRegister () {
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
+      // window.open('https://google.be#' + isMobile)
+      if (isMobile) {
+        var url = `threebot://registerAccount/?doubleName=${encodeURIComponent(this.doubleName)}`
+
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          window.location.replace(url)
+        } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          window.open(url)
+        }
+      }
+    },
     register () {
-      // TODO if is mobile -> open app
       this.$router.push({
         name: 'register'
       })
